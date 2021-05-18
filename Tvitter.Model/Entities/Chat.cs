@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tvitter.Core.Entity;
 
-namespace Tvitter.Model
+namespace Tvitter.Model.Entities
 {
     public class Chat : CoreEntity
     {

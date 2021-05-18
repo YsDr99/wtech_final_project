@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tvitter.Core.Map;
+using Tvitter.Model.Entities;
 
 namespace Tvitter.Model.Maps
 {

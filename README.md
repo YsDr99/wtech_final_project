@@ -9,4 +9,6 @@
 ### 18.05.2021
 <ul>
 	<li>Model Project created. Entities, dbcontext and maps added</li>
+	<li>Service Project created. BaseService added</li>
+	<li>Login and Sign up views&actions added</li>
 </ul>

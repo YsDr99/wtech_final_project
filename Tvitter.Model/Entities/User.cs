@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Tvitter.Core.Entity;
 using Tvitter.Model.Entities;
 
-namespace Tvitter.Model
+namespace Tvitter.Model.Entities
 {
     public class User : CoreEntity
     {

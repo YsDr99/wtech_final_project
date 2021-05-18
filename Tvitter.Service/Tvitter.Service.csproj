@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tvitter.Core\Tvitter.Core.csproj" />
+    <ProjectReference Include="..\Tvitter.Model\Tvitter.Model.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1535,6 +1535,20 @@
         "runtime": {
           "bin/placeholder/Tvitter.Model.dll": {}
         }
+      },
+      "Tvitter.Service/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Tvitter.Core": "1.0.0",
+          "Tvitter.Model": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Tvitter.Service.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Tvitter.Service.dll": {}
+        }
       }
     }
   },
@@ -5789,13 +5803,19 @@
       "type": "project",
       "path": "../Tvitter.Model/Tvitter.Model.csproj",
       "msbuildProject": "../Tvitter.Model/Tvitter.Model.csproj"
+    },
+    "Tvitter.Service/1.0.0": {
+      "type": "project",
+      "path": "../Tvitter.Service/Tvitter.Service.csproj",
+      "msbuildProject": "../Tvitter.Service/Tvitter.Service.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
       "Microsoft.EntityFrameworkCore >= 5.0.6",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.6",
-      "Tvitter.Model >= 1.0.0"
+      "Tvitter.Model >= 1.0.0",
+      "Tvitter.Service >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5827,6 +5847,9 @@
           "projectReferences": {
             "C:\\Users\\yunus\\Desktop\\wtech\\final\\Tvitter.Web\\Tvitter.Model\\Tvitter.Model.csproj": {
               "projectPath": "C:\\Users\\yunus\\Desktop\\wtech\\final\\Tvitter.Web\\Tvitter.Model\\Tvitter.Model.csproj"
+            },
+            "C:\\Users\\yunus\\Desktop\\wtech\\final\\Tvitter.Web\\Tvitter.Service\\Tvitter.Service.csproj": {
+              "projectPath": "C:\\Users\\yunus\\Desktop\\wtech\\final\\Tvitter.Web\\Tvitter.Service\\Tvitter.Service.csproj"
             }
           }
         }

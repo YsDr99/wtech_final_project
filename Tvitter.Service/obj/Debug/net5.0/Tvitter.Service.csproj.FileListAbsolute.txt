@@ -1,0 +1,17 @@
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\bin\Debug\net5.0\Tvitter.Service.deps.json
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\bin\Debug\net5.0\Tvitter.Service.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\bin\Debug\net5.0\ref\Tvitter.Service.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\bin\Debug\net5.0\Tvitter.Service.pdb
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\bin\Debug\net5.0\Tvitter.Core.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\bin\Debug\net5.0\Tvitter.Model.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\bin\Debug\net5.0\Tvitter.Core.pdb
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\bin\Debug\net5.0\Tvitter.Model.pdb
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\obj\Debug\net5.0\Tvitter.Service.csprojAssemblyReference.cache
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\obj\Debug\net5.0\Tvitter.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\obj\Debug\net5.0\Tvitter.Service.AssemblyInfoInputs.cache
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\obj\Debug\net5.0\Tvitter.Service.AssemblyInfo.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\obj\Debug\net5.0\Tvitter.Service.csproj.CoreCompileInputs.cache
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\obj\Debug\net5.0\Tvitter.Service.csproj.CopyComplete
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\obj\Debug\net5.0\Tvitter.Service.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\obj\Debug\net5.0\ref\Tvitter.Service.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Service\obj\Debug\net5.0\Tvitter.Service.pdb

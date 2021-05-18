@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tvitter.Core.Map;
+using Tvitter.Model.Entities;
 
 namespace Tvitter.Model.Maps
 {

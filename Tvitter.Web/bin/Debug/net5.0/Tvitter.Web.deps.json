@@ -36,6 +36,7 @@
           "Microsoft.EntityFrameworkCore": "5.0.6",
           "Microsoft.EntityFrameworkCore.Design": "5.0.6",
           "Tvitter.Model": "1.0.0",
+          "Tvitter.Service": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "5.0.0.0",
@@ -1338,6 +1339,18 @@
         },
         "compile": {
           "Tvitter.Model.dll": {}
+        }
+      },
+      "Tvitter.Service/1.0.0": {
+        "dependencies": {
+          "Tvitter.Core": "1.0.0",
+          "Tvitter.Model": "1.0.0"
+        },
+        "runtime": {
+          "Tvitter.Service.dll": {}
+        },
+        "compile": {
+          "Tvitter.Service.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
@@ -3712,6 +3725,11 @@
       "sha512": ""
     },
     "Tvitter.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Tvitter.Service/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

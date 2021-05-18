@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tvitter.Core.Service;
 using Tvitter.Model;
+using Tvitter.Service;
 
 namespace Tvitter.Web
 {
@@ -28,6 +30,7 @@ namespace Tvitter.Web
             services.AddControllersWithViews();
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(connectionString: Configuration.GetConnectionString("Default")));
+            services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
