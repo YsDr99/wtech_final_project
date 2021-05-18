@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tvitter.Web", "Tvitter.Web\Tvitter.Web.csproj", "{2CB44C00-5627-4BFB-AA1E-E96A6E57C124}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tvitter.Core", "Tvitter.Core\Tvitter.Core.csproj", "{4D11186A-B8E0-4BB4-A25B-938BF5207F50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tvitter.Core", "Tvitter.Core\Tvitter.Core.csproj", "{4D11186A-B8E0-4BB4-A25B-938BF5207F50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tvitter.Model", "Tvitter.Model\Tvitter.Model.csproj", "{731E06AA-A9C3-4858-9F35-1428F299DFC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tvitter.Web", "Tvitter.Web\Tvitter.Web.csproj", "{D35A5279-1217-4690-AD56-58067C047943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2CB44C00-5627-4BFB-AA1E-E96A6E57C124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CB44C00-5627-4BFB-AA1E-E96A6E57C124}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CB44C00-5627-4BFB-AA1E-E96A6E57C124}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CB44C00-5627-4BFB-AA1E-E96A6E57C124}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D11186A-B8E0-4BB4-A25B-938BF5207F50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D11186A-B8E0-4BB4-A25B-938BF5207F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D11186A-B8E0-4BB4-A25B-938BF5207F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D11186A-B8E0-4BB4-A25B-938BF5207F50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{731E06AA-A9C3-4858-9F35-1428F299DFC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{731E06AA-A9C3-4858-9F35-1428F299DFC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{731E06AA-A9C3-4858-9F35-1428F299DFC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{731E06AA-A9C3-4858-9F35-1428F299DFC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D35A5279-1217-4690-AD56-58067C047943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D35A5279-1217-4690-AD56-58067C047943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D35A5279-1217-4690-AD56-58067C047943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D35A5279-1217-4690-AD56-58067C047943}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

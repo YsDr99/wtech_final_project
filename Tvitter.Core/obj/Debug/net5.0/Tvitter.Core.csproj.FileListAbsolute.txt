@@ -1,0 +1,15 @@
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\bin\Debug\net5.0\Tvitter.Core.deps.json
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\bin\Debug\net5.0\Tvitter.Core.runtimeconfig.json
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\bin\Debug\net5.0\Tvitter.Core.runtimeconfig.dev.json
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\bin\Debug\net5.0\Tvitter.Core.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\bin\Debug\net5.0\ref\Tvitter.Core.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\bin\Debug\net5.0\Tvitter.Core.pdb
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.AssemblyInfoInputs.cache
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.AssemblyInfo.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.csproj.CoreCompileInputs.cache
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\ref\Tvitter.Core.dll
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.pdb
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.genruntimeconfig.cache
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.csprojAssemblyReference.cache
