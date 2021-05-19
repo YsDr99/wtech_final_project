@@ -18,9 +18,9 @@ namespace Tvitter.Core.Service
         bool RemoveAll(Expression<Func<T, bool>> exp);
         T GetById(Guid id);
         T GetFirstOrDefault(Expression<Func<T, bool>> exp);
-        List<T> GetActive();
-        List<T> GetDefault(Expression<Func<T, bool>> exp);
-        List<T> GetAll();
+        ICollection<T> GetActive();
+        ICollection<T> GetDefault(Expression<Func<T, bool>> exp);
+        ICollection<T> GetAll();
         bool Activate(Guid id);
         bool Any(Expression<Func<T, bool>> exp);
         bool SaveChanges();

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ using Tvitter.Model.Entities;
 
 namespace Tvitter.Web.Controllers
 {
+
     public class LoginController : Controller
     {
         private readonly ICoreService<User> _context;
@@ -25,15 +28,30 @@ namespace Tvitter.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(User user)
+        public async Task<IActionResult> IndexAsync(User user)
         {
             if (ModelState.IsValid)
             {
                 user.Password = ComputeSha256Hash(user.Password);
                 if (_context.Any(x => x.Email == user.Email && x.Password == user.Password))
                 {
-                    TempData["ErrorMessage"] = "Login Succesful.";
-                    return View(user);
+                    User logged = _context.GetFirstOrDefault(x =>
+                        x.Email == user.Email && x.Password == user.Password);
+
+
+                    var claims = new List<Claim>()
+                        {
+                        new Claim("ID", logged.ID.ToString()),
+                        new Claim(ClaimTypes.Name, logged.Fullname),
+                        new Claim("Username", logged.Username),
+                        new Claim(ClaimTypes.Email, logged.Email),
+                        };
+
+                    var userIdentity = new ClaimsIdentity(claims, "login");
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    await HttpContext.SignInAsync(principal);
+                    return RedirectToAction("Index", "Home");
+
                 }
                 else
                 {
@@ -49,6 +67,12 @@ namespace Tvitter.Web.Controllers
             return View(user);
         }
 
+        public async Task<IActionResult> LogoutAsync()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Login");
+        }
+
         public IActionResult SignUp()
         {
             return View();
@@ -59,7 +83,7 @@ namespace Tvitter.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(_context.Any(x => x.Username == user.Username))
+                if (_context.Any(x => x.Username == user.Username))
                 {
                     TempData["ErrorMessage"] = "Username Exist.";
                     return View(user);
@@ -81,6 +105,8 @@ namespace Tvitter.Web.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
 
         string ComputeSha256Hash(string rawData)
         {

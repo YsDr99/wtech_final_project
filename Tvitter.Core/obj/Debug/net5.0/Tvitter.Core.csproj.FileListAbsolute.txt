@@ -12,3 +12,4 @@ C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvi
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\ref\Tvitter.Core.dll
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.pdb
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.genruntimeconfig.cache
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Core\obj\Debug\net5.0\Tvitter.Core.csprojAssemblyReference.cache

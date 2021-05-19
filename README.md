@@ -12,3 +12,11 @@
 	<li>Service Project created. BaseService added</li>
 	<li>Login and Sign up views&actions added</li>
 </ul>
+
+### 19.05.2021
+<ul>
+	<li>User must login added</li>
+	<li>Main layout added</li>
+	<li>Profile page added, edit profile added</li>
+</ul>
+

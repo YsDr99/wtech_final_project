@@ -61,17 +61,17 @@ namespace Tvitter.Service
 
         public bool Any(Expression<Func<T, bool>> exp) => context.Set<T>().Any(exp);
 
-        public List<T> GetActive()
+        public ICollection<T> GetActive()
             => context.Set<T>().Where(x => x.Status != Status.Deleted).ToList();
 
-        public List<T> GetAll() => context.Set<T>().ToList();
+        public ICollection<T> GetAll() => context.Set<T>().ToList();
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> exp)
             => context.Set<T>().FirstOrDefault(exp);
 
         public T GetById(Guid id) => context.Set<T>().Find(id);
 
-        public List<T> GetDefault(Expression<Func<T, bool>> exp)
+        public ICollection<T> GetDefault(Expression<Func<T, bool>> exp)
             => context.Set<T>().Where(exp).ToList();
 
         public bool Remove(T item)
@@ -132,7 +132,7 @@ namespace Tvitter.Service
                 context.Set<T>().Update(item);
                 return SaveChanges();
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
