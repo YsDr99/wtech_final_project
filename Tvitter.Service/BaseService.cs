@@ -80,6 +80,12 @@ namespace Tvitter.Service
             return Update(item);
         }
 
+        public bool RemovePerma(T item)
+        {
+            context.Set<T>().Remove(item);
+            return SaveChanges();
+        }
+
         public bool Remove(Guid id)
         {
             try
@@ -132,7 +138,7 @@ namespace Tvitter.Service
                 context.Set<T>().Update(item);
                 return SaveChanges();
             }
-            catch(Exception e)
+            catch
             {
                 return false;
             }

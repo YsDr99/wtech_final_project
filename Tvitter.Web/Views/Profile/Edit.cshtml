@@ -4,14 +4,15 @@
     ViewData["Title"] = "EditProfile";
 }
 
+
 <h1>EditProfile</h1>
 <div>
-    <a asp-action="Profile">Back</a>
+    <a asp-action="Index">Back</a>
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditProfile" enctype="multipart/form-data">
+    <div class="col-8">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Fullname" class="control-label"></label>
@@ -45,7 +46,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProfilePictureUrl" class="control-label">Profile Picture</label><br />
-                <input type="file" name="files"  />
+                <input type="file" name="files" accept="image/*" />
                 <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -62,7 +63,7 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
-        
+
     </div>
 </div>
 

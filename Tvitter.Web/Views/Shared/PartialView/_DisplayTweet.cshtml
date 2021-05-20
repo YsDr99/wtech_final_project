@@ -1,0 +1,56 @@
+﻿@model Tuple<User, Tweet>
+@{
+    Layout = null;
+}
+
+<div class="container">
+
+    <div class=" mb-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-start w-100">
+                    @if (Model.Item1.ProfilePictureUrl != null)
+                    {
+                        <img class="rounded-circle shadow-1-strong mr-3"
+                             src="@Url.Content(Model.Item1.ProfilePictureUrl)"
+                             alt="avatar"
+                             width="45"
+                             height="45" />
+                    }
+                    else
+                    {
+                        <img class="rounded-circle shadow-1-strong mr-3"
+                             src="https://st.depositphotos.com/1779253/5140/v/600/depositphotos_51405259-stock-illustration-male-avatar-profile-picture-use.jpg"
+                             alt="avatar"
+                             width="45"
+                             height="45" />
+                    }
+
+                    <div>
+                        <p>
+                            <b>@Model.Item1.Fullname</b><br />
+                            <span style="color:lightgray">
+                                @Html.Raw("@")@Model.Item1.Username @Model.Item2.CreatedDate
+                            </span>
+                        </p>
+                    </div>
+
+                </div>
+                <div>
+                    <p class="mt-2">@Model.Item2.Text</p>
+                </div>
+                @if (Model.Item2.MediaUrl != null)
+                {
+                    <img src="@Url.Content(Model.Item2.MediaUrl)" alt="" class="card-img-bottom mb-2">
+
+                }
+                <a href="" class="btn btn-outline-success btn-sm">Comment</a>
+                <a href="" class="btn btn-outline-danger btn-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -77,7 +77,6 @@ C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\ref\
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Tvitter.Web.pdb
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Tvitter.Web.genruntimeconfig.cache
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Login\SignUp.cshtml.g.cs
-C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Home\Profile.cshtml.g.cs
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\bin\Debug\net5.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\bin\Debug\net5.0\Microsoft.CodeAnalysis.dll
@@ -152,4 +151,9 @@ C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\bin\Debug\net5.0\zh-H
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\bin\Debug\net5.0\runtimes\win-arm\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
-C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Home\EditProfile.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Shared\PartialView\_PostTweet.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Shared\PartialView\_DisplayTweet.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\Edit.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\Index.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\UserNotFound.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\UserProfile.cshtml.g.cs

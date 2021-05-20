@@ -5,7 +5,7 @@
 }
 
 <div class="row py-5 px-4">
-    <div class="col-md-5 mx-auto">
+    <div class="col-12 mx-auto">
         <!-- Profile widget -->
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-0 pb-4 cover">
@@ -31,7 +31,7 @@
             </div>
             <div class="bg-light p-4 d-flex justify-content-sm-between text-center mt-4">
                 <div class="mt-0">
-                    <a asp-controller="Home" asp-action="EditProfile" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+                    <a asp-controller="Profile" asp-action="Edit" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
                     @if (Model.Location != null)
                     {
                         <b class="mt-0 mb-0">
@@ -76,8 +76,11 @@
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h5 class="mb-0">Recent Tweets</h5><a href="#" class="btn btn-link text-muted">Show all</a>
                 </div>
-                <div class="row">
-                    @*recent tweets will shown up here*@
+                <div class="col-11 mx-auto">
+                    @foreach (var tweet in Model.Tweets)
+                    {
+                        @await Html.PartialAsync("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(Model,tweet))
+                    }
                 </div>
             </div>
         </div>

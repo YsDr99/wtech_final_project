@@ -15,6 +15,7 @@ namespace Tvitter.Core.Service
         bool Update(T item);
         bool Remove(T item);
         bool Remove(Guid id);
+        bool RemovePerma(T item);
         bool RemoveAll(Expression<Func<T, bool>> exp);
         T GetById(Guid id);
         T GetFirstOrDefault(Expression<Func<T, bool>> exp);

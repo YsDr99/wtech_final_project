@@ -20,7 +20,7 @@ namespace Tvitter.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICoreService<User> _context;
+        private readonly ICoreService<User> _Usercontext;
         private readonly ICoreService<Follow> _followContext;
         private readonly ICoreService<Tweet> _tweetContext;
         private IWebHostEnvironment _environment;
@@ -28,7 +28,7 @@ namespace Tvitter.Web.Controllers
             ICoreService<Follow> followContext, ICoreService<Tweet> tweetContext, IWebHostEnvironment environment)
         {
             _logger = logger;
-            _context = context;
+            _Usercontext = context;
             _followContext = followContext;
             _tweetContext = tweetContext;
             _environment = environment;
@@ -36,85 +36,39 @@ namespace Tvitter.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Profile()
-        {
             Guid id = Guid.Parse(User.FindFirst("ID").Value);
-            var user = _context.GetById(id);
-            user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID);
-            user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID);
+            var user = _Usercontext.GetById(id);
             user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID);
-            return View(user);
-        }
+            return View(Tuple.Create(user, new Tweet()));
 
-        public IActionResult EditProfile()
-        {
-            Guid id = Guid.Parse(User.FindFirst("ID").Value);
-            return View(_context.GetById(id));
         }
 
         [HttpPost]
-        public IActionResult EditProfile(User user)
+        public IActionResult Index(Tweet tweet)
         {
-            var updateUser = _context.GetById(user.ID);
-            updateUser.Fullname = user.Fullname;
-            updateUser.About = user.About;
-            updateUser.Location = user.Location;
-            updateUser.Website = user.Website;
-            updateUser.BirthDate = user.BirthDate;
-            updateUser.gender = user.gender;
-            var newFileName = string.Empty;
+            Guid id = Guid.Parse(User.FindFirst("ID").Value);
 
-            if (HttpContext.Request.Form.Files != null)
+            if (ModelState.IsValid)
             {
-                var fileName = string.Empty;
-                string PathDB = string.Empty;
-
-                var files = HttpContext.Request.Form.Files;
-
-                foreach (var file in files)
+                tweet.UserId = id;
+                if (HttpContext.Request.Form.Files != null)
                 {
-                    if (file.Length > 0)
+                    var files = HttpContext.Request.Form.Files;
+
+                    foreach (var file in files)
                     {
-                        //Getting FileName
-                        fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-
-                        //Assigning Unique Filename (Guid)
-                        var myUniqueFileName = Convert.ToString(Guid.NewGuid());
-
-                        //Getting file Extension
-                        var FileExtension = Path.GetExtension(fileName);
-
-                        // concating  FileName + FileExtension
-                        newFileName = myUniqueFileName + FileExtension;
-
-                        // Combines two strings into a path.
-                        fileName = Path.Combine(_environment.WebRootPath, "ProfilePictures") + $@"\{newFileName}";
-
-
-
-                        using (FileStream fs = System.IO.File.Create(fileName))
+                        if (file.Length > 0 && file.ContentType.Contains("image"))
                         {
-                            file.CopyTo(fs);
-                            fs.Flush();
+                            Upload upload = new Upload(file, "TweetMedia", _environment);
+
+                            tweet.MediaUrl= upload.UploadFile();
                         }
-                        updateUser.ProfilePictureUrl = "~/ProfilePictures/" + newFileName;
                     }
                 }
+                _tweetContext.Add(tweet);
             }
-
-            if (_context.Update(updateUser))
-            {
-                return RedirectToAction("Profile", "Home");
-            }
-            else
-            {
-                return View(user);
-            }
+            return RedirectToAction("Index", "Home");
         }
-
 
 
 

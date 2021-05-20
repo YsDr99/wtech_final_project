@@ -1,0 +1,29 @@
+﻿@model User
+
+@{
+    ViewData["title"] = "Search";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-9 mx-auto mt-4">
+            <div class="error-template">
+                <h1>
+                    Oops!
+                </h1>
+                <h2>
+                    @Html.Raw("@")@Model.Username Not Found
+                </h2>
+                <div class="error-details">
+                    No user found from specified username
+                </div>
+                <div class="error-actions mt-2">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg">
+                       Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

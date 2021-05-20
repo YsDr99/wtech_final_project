@@ -71,6 +71,10 @@ namespace Tvitter.Web
                    name: "signup",
                    pattern: "Signup",
                    defaults: new { controller = "Login", action = "Signup" });
+                endpoints.MapControllerRoute(
+                   name: "profile",
+                   pattern: "{username}",
+                   defaults: new { controller = "Profile", action = "UserProfile" });
             });
         }
     }

@@ -20,3 +20,12 @@
 	<li>Profile page added, edit profile added</li>
 </ul>
 
+### 20.05.2021
+<ul>
+	<li>Users can post tweet</li>
+	<li>Users can see their tweets at profile page</li>
+	<li>Users can follow each other</li>
+	<li>Users can search other users by username</li>
+	<li>Code design changes</li>
+</ul>
+
