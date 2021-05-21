@@ -32,11 +32,18 @@
                 </div>
             </div>
         </div>
-        @*<div class="mx-auto mb-5 mt-2">
-            @foreach (var tweet in Model.Item1.Tweets)
+        <div class="mx-auto mb-2 mt-2">
+            @foreach (var tweet in Model.Item1.HomePageTweets.Take(50))
             {
-                @await Html.PartialAsync("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(Model.Item1, tweet))
+            <div id="view@(tweet.Item2.ID.ToString())">
+                @await Html.PartialAsync("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(tweet.Item1, tweet.Item2))
+            </div>
             }
-        </div>*@
+        </div>
+        <div class="container mb-5">
+            <div class="card bg-success text-white">
+                <div class="card-body">All caught up!</div>
+            </div>
+        </div>
     </div>
 </section>

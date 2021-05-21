@@ -37,7 +37,6 @@
           "Microsoft.EntityFrameworkCore.Design": "5.0.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.6",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
-          "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.6",
           "Tvitter.Model": "1.0.0",
           "Tvitter.Service": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
@@ -337,7 +336,6 @@
           }
         }
       },
-      "jQuery/1.8.0": {},
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
         "dependencies": {
           "System.Text.Encodings.Web": "4.5.0"
@@ -922,11 +920,6 @@
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {}
-        }
-      },
-      "Microsoft.jQuery.Unobtrusive.Ajax/3.2.6": {
-        "dependencies": {
-          "jQuery": "1.8.0"
         }
       },
       "Microsoft.NETCore.Platforms/3.1.0": {},
@@ -3554,13 +3547,6 @@
       "path": "humanizer.core/2.8.26",
       "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
     },
-    "jQuery/1.8.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-laDFQRJrIRHT0Z0GVYklMt3bE0iu0MZFJwHwg21kt3SHb7Bj8TdNiM3K+ZdK1DzB8ZxKy8z7NkJvwMas+dmHBw==",
-      "path": "jquery/1.8.0",
-      "hashPath": "jquery.1.8.0.nupkg.sha512"
-    },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
       "type": "package",
       "serviceable": true,
@@ -3805,13 +3791,6 @@
       "sha512": "sha512-C3OqR3QfBQ7wcC7yAsdMQqay87OsV6yWPYG/Ai3n7dvmWIGkouQhXoVxRP0xz3cAFL4hxZBXyw4aLTC421PaMg==",
       "path": "microsoft.identitymodel.tokens/5.6.0",
       "hashPath": "microsoft.identitymodel.tokens.5.6.0.nupkg.sha512"
-    },
-    "Microsoft.jQuery.Unobtrusive.Ajax/3.2.6": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-udg7ZBszgqxloQ+ShJRONKQAzPnJIlUhKZB+AIvZdKh7CDc5Nms69T9X0hN5i+NqMmQE6njkzdCcEb16lPdJTw==",
-      "path": "microsoft.jquery.unobtrusive.ajax/3.2.6",
-      "hashPath": "microsoft.jquery.unobtrusive.ajax.3.2.6.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "type": "package",

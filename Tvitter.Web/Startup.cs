@@ -66,7 +66,7 @@ namespace Tvitter.Web
                 endpoints.MapControllerRoute(
                     name: "login",
                     pattern: "Login",
-                    defaults: new { controller = "Login", action = "Index"});
+                    defaults: new { controller = "Login", action = "Index" });
                 endpoints.MapControllerRoute(
                    name: "signup",
                    pattern: "Signup",
@@ -75,6 +75,18 @@ namespace Tvitter.Web
                    name: "profile",
                    pattern: "{username}",
                    defaults: new { controller = "Profile", action = "UserProfile" });
+                endpoints.MapControllerRoute(
+                   name: "follower",
+                   pattern: "{username}/Followers",
+                   defaults: new { controller = "Profile", action = "Followers" });
+                endpoints.MapControllerRoute(
+                   name: "following",
+                   pattern: "{username}/Following",
+                   defaults: new { controller = "Profile", action = "Following" });
+                endpoints.MapControllerRoute(
+                 name: "tweets",
+                 pattern: "{username}/Tweets",
+                 defaults: new { controller = "Profile", action = "Tweets" });
             });
         }
     }

@@ -17,24 +17,31 @@ namespace Tvitter.Web.Controllers
         private readonly ICoreService<User> _userContext;
         private readonly ICoreService<Follow> _followContext;
         private readonly ICoreService<Tweet> _tweetContext;
+        private readonly ICoreService<Like> _likeContext;
+
         private IWebHostEnvironment _environment;
 
         public ProfileController(ICoreService<User> usercontext, ICoreService<Follow> followContext,
-            ICoreService<Tweet> tweetContext, IWebHostEnvironment environment)
+            ICoreService<Tweet> tweetContext, IWebHostEnvironment environment, ICoreService<Like> likeContext)
         {
             _userContext = usercontext;
             _followContext = followContext;
             _tweetContext = tweetContext;
             _environment = environment;
+            _likeContext = likeContext;
         }
 
         public IActionResult Index()
         {
             Guid id = Guid.Parse(User.FindFirst("ID").Value);
             var user = _userContext.GetById(id);
-            user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID);
-            user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID);
-            user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID);
+            user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
+            user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
+            user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
+            foreach (var tweet in user.Tweets)
+            {
+                tweet.Likes = _likeContext.GetDefault(x => x.TweetId == tweet.ID);
+            }
             return View(user);
         }
 
@@ -86,9 +93,13 @@ namespace Tvitter.Web.Controllers
             {
                 Guid id = Guid.Parse(User.FindFirst("ID").Value);
                 var user = _userContext.GetById(id);
-                user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID);
-                user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID);
-                user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID);
+                user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
+                user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
+                user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
+                foreach (var tweet in user.Tweets)
+                {
+                    tweet.Likes = _likeContext.GetDefault(x => x.TweetId == tweet.ID);
+                }
                 return View(user);
             }
             else
@@ -103,10 +114,13 @@ namespace Tvitter.Web.Controllers
                     Guid id = Guid.Parse(User.FindFirst("ID").Value);
                     user = _userContext.GetById(id);
                 }
-                user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID);
-                user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID);
-                user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID);
-               
+                user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
+                user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
+                user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
+                foreach (var tweet in user.Tweets)
+                {
+                    tweet.Likes = _likeContext.GetDefault(x => x.TweetId == tweet.ID);
+                }
                 return View(user);
             }
 
@@ -154,5 +168,46 @@ namespace Tvitter.Web.Controllers
 
         }
 
+        public IActionResult Followers(string username)
+        {
+            User user = _userContext.GetFirstOrDefault(x => x.Username == username);
+            Guid userId = user.ID;
+            var query = from u in _userContext.GetAll()
+                        join f in _followContext.GetDefault(x => x.FollowingId == userId)
+                            on u.ID equals f.FollowerId
+                        select u;
+            List<User> result = query.ToList();
+            return View(result);
+        }
+
+        public IActionResult Following(string username)
+        {
+            User user = _userContext.GetFirstOrDefault(x => x.Username == username);
+            Guid userId = user.ID;
+            var query = from u in _userContext.GetAll()
+                        join f in _followContext.GetDefault(x => x.FollowerId == userId)
+                            on u.ID equals f.FollowingId
+                        select u;
+            List<User> result = query.ToList();
+            return View(result);
+        }
+
+        public IActionResult Tweets(string username)
+        {
+            User user = _userContext.GetFirstOrDefault(x => x.Username == username);
+            user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID);
+            foreach(var tweet in user.Tweets)
+            {
+                tweet.Likes = _likeContext.GetDefault(x => x.TweetId == tweet.ID);
+            }
+            return View(user);
+        }
+
+        public IActionResult DeleteTweet(Guid id)
+        {
+            var username = User.FindFirst("Username").Value;
+            _tweetContext.Remove(id);
+            return Redirect("/" + username);
+        }
     }
 }

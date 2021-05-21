@@ -157,3 +157,7 @@ C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razo
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\Index.cshtml.g.cs
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\UserNotFound.cshtml.g.cs
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\UserProfile.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\Followers.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\Following.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Profile\Tweets.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\bin\Debug\net5.0\libman.json

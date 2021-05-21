@@ -74,13 +74,13 @@
                 </div>
                 <ul class="list-inline mb-0">
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block">@Model.Tweets.Count</h5><small class="text-muted"> <i class="fas fa-image mr-1"></i>Tweets</small>
+                        <h5 class="font-weight-bold mb-0 d-block">@Model.Tweets.Count</h5><small class="text-muted"> <i class="fas fa-image mr-1"></i><a href="/@Model.Username/Tweets">Tweets</a></small>
                     </li>
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block">@Model.Followers.Count</h5><small class="text-muted"> <i class="fas fa-user mr-1"></i>Followers</small>
+                        <h5 class="font-weight-bold mb-0 d-block">@Model.Followers.Count</h5><small class="text-muted"> <i class="fas fa-user mr-1"></i><a href="/@Model.Username/Followers">Followers</a></small>
                     </li>
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block">@Model.Following.Count</h5><small class="text-muted"> <i class="fas fa-user mr-1"></i>Following</small>
+                        <h5 class="font-weight-bold mb-0 d-block">@Model.Following.Count</h5><small class="text-muted"> <i class="fas fa-user mr-1"></i><a href="/@Model.Username/Following">Following</a></small>
                     </li>
                 </ul>
             </div>
@@ -94,12 +94,14 @@
             </div>
             <div class="py-4 px-4">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0">Recent Tweets</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+                    <h5 class="mb-0">Recent Tweets</h5><a href="/@Model.Username/Tweets" class="btn btn-link text-muted">Show all</a>
                 </div>
                 <div class="col-11 mx-auto">
-                    @foreach (var tweet in Model.Tweets)
+                    @foreach (var tweet in Model.Tweets.Take(5))
                     {
-                        @await Html.PartialAsync("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(Model, tweet))
+                        <div id="view@(tweet.ID.ToString())">
+                            @await Html.PartialAsync("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(Model, tweet))
+                        </div>
                     }
                 </div>
             </div>

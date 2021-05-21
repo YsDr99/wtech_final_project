@@ -59,20 +59,20 @@ namespace Tvitter.Service
             }
         }
 
-        public bool Any(Expression<Func<T, bool>> exp) => context.Set<T>().Any(exp);
+        public bool Any(Expression<Func<T, bool>> exp) => context.Set<T>().Where(x => x.Status != Status.Deleted).Any(exp);
 
         public ICollection<T> GetActive()
             => context.Set<T>().Where(x => x.Status != Status.Deleted).ToList();
 
-        public ICollection<T> GetAll() => context.Set<T>().ToList();
+        public ICollection<T> GetAll() => context.Set<T>().Where(x => x.Status != Status.Deleted).ToList();
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> exp)
-            => context.Set<T>().FirstOrDefault(exp);
+            => context.Set<T>().Where(x => x.Status != Status.Deleted).FirstOrDefault(exp);
 
         public T GetById(Guid id) => context.Set<T>().Find(id);
 
         public ICollection<T> GetDefault(Expression<Func<T, bool>> exp)
-            => context.Set<T>().Where(exp).ToList();
+            => context.Set<T>().Where(exp).Where(x => x.Status != Status.Deleted).ToList();
 
         public bool Remove(T item)
         {

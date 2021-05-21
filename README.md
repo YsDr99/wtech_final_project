@@ -29,3 +29,9 @@
 	<li>Code design changes</li>
 </ul>
 
+### 21.05.2021
+<ul>
+	<li>Users can see their followers, following and tweets</li>
+	<li>Users can see their following users' tweets at home page</li>
+	<li>Users can Like/unlike tweets</li>
+</ul>

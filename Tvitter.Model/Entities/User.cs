@@ -29,6 +29,8 @@ namespace Tvitter.Model.Entities
         public ICollection<Follow> Followers { get; set; }
         [NotMapped]
         public ICollection<Follow> Following { get; set; }
+        [NotMapped]
+        public ICollection<Tuple<User, Tweet>> HomePageTweets { get; set; }
 
         public virtual ICollection<Tweet> Tweets { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
