@@ -14,7 +14,7 @@ namespace Tvitter.Service
 {
     public class BaseService<T> : ICoreService<T> where T : CoreEntity
     {
-        private readonly DatabaseContext context;
+        protected readonly DatabaseContext context;
 
         public BaseService(DatabaseContext context)
         {
@@ -35,7 +35,7 @@ namespace Tvitter.Service
                 context.Set<T>().Add(item);
                 return SaveChanges();
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }

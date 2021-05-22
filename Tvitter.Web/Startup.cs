@@ -31,7 +31,9 @@ namespace Tvitter.Web
             services.AddControllersWithViews();
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(connectionString: Configuration.GetConnectionString("Default")));
+
             services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>));
+            services.AddScoped(typeof(ITweetService<>), typeof(TweetService<>));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => { options.LoginPath = "/Login"; });
@@ -68,25 +70,29 @@ namespace Tvitter.Web
                     pattern: "Login",
                     defaults: new { controller = "Login", action = "Index" });
                 endpoints.MapControllerRoute(
-                   name: "signup",
-                   pattern: "Signup",
-                   defaults: new { controller = "Login", action = "Signup" });
+                    name: "signup",
+                    pattern: "Signup",
+                    defaults: new { controller = "Login", action = "Signup" });
                 endpoints.MapControllerRoute(
-                   name: "profile",
-                   pattern: "{username}",
-                   defaults: new { controller = "Profile", action = "UserProfile" });
+                    name: "profile",
+                    pattern: "{username}",
+                    defaults: new { controller = "Profile", action = "UserProfile" });
                 endpoints.MapControllerRoute(
-                   name: "follower",
-                   pattern: "{username}/Followers",
-                   defaults: new { controller = "Profile", action = "Followers" });
+                    name: "follower",
+                    pattern: "{username}/Followers",
+                    defaults: new { controller = "Profile", action = "Followers" });
                 endpoints.MapControllerRoute(
-                   name: "following",
-                   pattern: "{username}/Following",
-                   defaults: new { controller = "Profile", action = "Following" });
+                    name: "following",
+                    pattern: "{username}/Following",
+                    defaults: new { controller = "Profile", action = "Following" });
                 endpoints.MapControllerRoute(
-                 name: "tweets",
-                 pattern: "{username}/Tweets",
-                 defaults: new { controller = "Profile", action = "Tweets" });
+                    name: "tweets",
+                    pattern: "{username}/Tweets",
+                    defaults: new { controller = "Profile", action = "Tweets" });
+                endpoints.MapControllerRoute(
+                    name: "tweet",
+                    pattern: "Tweet/{id}",
+                    defaults: new { controller = "Tweet", action = "Index" ,id = "id"});
             });
         }
     }

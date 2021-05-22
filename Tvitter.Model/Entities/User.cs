@@ -36,7 +36,8 @@ namespace Tvitter.Model.Entities
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Chat> Chats { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
+        [NotMapped]
+        public virtual ICollection<Tweet> Comments { get; set; }
         public virtual ICollection<Mention> Mentions { get; set; }
 
 

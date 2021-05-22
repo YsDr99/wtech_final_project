@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tvitter.Core.Entity.Enum;
 using Tvitter.Core.Service;
 using Tvitter.Model.Entities;
 using Tvitter.Web.Models;
@@ -16,13 +17,13 @@ namespace Tvitter.Web.Controllers
     {
         private readonly ICoreService<User> _userContext;
         private readonly ICoreService<Follow> _followContext;
-        private readonly ICoreService<Tweet> _tweetContext;
+        private readonly ITweetService<Tweet> _tweetContext;
         private readonly ICoreService<Like> _likeContext;
 
         private IWebHostEnvironment _environment;
 
         public ProfileController(ICoreService<User> usercontext, ICoreService<Follow> followContext,
-            ICoreService<Tweet> tweetContext, IWebHostEnvironment environment, ICoreService<Like> likeContext)
+            ITweetService<Tweet> tweetContext, IWebHostEnvironment environment, ICoreService<Like> likeContext)
         {
             _userContext = usercontext;
             _followContext = followContext;
@@ -37,11 +38,8 @@ namespace Tvitter.Web.Controllers
             var user = _userContext.GetById(id);
             user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
             user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-            user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-            foreach (var tweet in user.Tweets)
-            {
-                tweet.Likes = _likeContext.GetDefault(x => x.TweetId == tweet.ID);
-            }
+            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet).OrderByDescending(y => y.CreatedDate).ToList();
+
             return View(user);
         }
 
@@ -95,11 +93,8 @@ namespace Tvitter.Web.Controllers
                 var user = _userContext.GetById(id);
                 user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
                 user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-                user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-                foreach (var tweet in user.Tweets)
-                {
-                    tweet.Likes = _likeContext.GetDefault(x => x.TweetId == tweet.ID);
-                }
+                user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet).OrderByDescending(y => y.CreatedDate).ToList();
+
                 return View(user);
             }
             else
@@ -116,11 +111,8 @@ namespace Tvitter.Web.Controllers
                 }
                 user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
                 user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-                user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-                foreach (var tweet in user.Tweets)
-                {
-                    tweet.Likes = _likeContext.GetDefault(x => x.TweetId == tweet.ID);
-                }
+                user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet).OrderByDescending(y => y.CreatedDate).ToList();
+
                 return View(user);
             }
 
@@ -195,11 +187,8 @@ namespace Tvitter.Web.Controllers
         public IActionResult Tweets(string username)
         {
             User user = _userContext.GetFirstOrDefault(x => x.Username == username);
-            user.Tweets = _tweetContext.GetDefault(x => x.UserId == user.ID);
-            foreach(var tweet in user.Tweets)
-            {
-                tweet.Likes = _likeContext.GetDefault(x => x.TweetId == tweet.ID);
-            }
+            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet);
+
             return View(user);
         }
 

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Tvitter.Core.Entity.Enum;
 using Tvitter.Core.Service;
 using Tvitter.Model.Entities;
 using Tvitter.Web.Models;
@@ -23,11 +24,11 @@ namespace Tvitter.Web.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ICoreService<User> _userContext;
         private readonly ICoreService<Follow> _followContext;
-        private readonly ICoreService<Tweet> _tweetContext;
+        private readonly ITweetService<Tweet> _tweetContext;
         private readonly ICoreService<Like> _likeContext;
         private IWebHostEnvironment _environment;
         public HomeController(ILogger<HomeController> logger, ICoreService<User> context,
-            ICoreService<Follow> followContext, ICoreService<Tweet> tweetContext, IWebHostEnvironment environment,
+            ICoreService<Follow> followContext, ITweetService<Tweet> tweetContext, IWebHostEnvironment environment,
             ICoreService<Like> likeContext)
         {
             _logger = logger;
@@ -47,15 +48,12 @@ namespace Tvitter.Web.Controllers
             var query = from u in _userContext.GetAll()
                         join f in _followContext.GetDefault(x => x.FollowerId == id)
                             on u.ID equals f.FollowingId
-                        join t in _tweetContext.GetAll()
+                        join t in _tweetContext.GetTweets(x => x.Type == TweetType.tweet)
                             on u.ID equals t.UserId
                         orderby t.CreatedDate descending
                         select Tuple.Create<User, Tweet>(u, t);
             user.HomePageTweets = query.ToList();
-            foreach(var item in user.HomePageTweets)
-            {
-                item.Item2.Likes = _likeContext.GetDefault(x => x.TweetId == item.Item2.ID);
-            }
+
             return View(Tuple.Create(user, new Tweet()));
 
         }
@@ -84,7 +82,7 @@ namespace Tvitter.Web.Controllers
                 }
                 _tweetContext.Add(tweet);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Profile");
         }
 
         [HttpPost]
@@ -96,8 +94,7 @@ namespace Tvitter.Web.Controllers
             _likeContext.Add(like);
             
 
-            Tweet tweet = _tweetContext.GetFirstOrDefault(x => x.ID == Guid.Parse(TweetId));
-            tweet.Likes = _likeContext.GetDefault(x => x.TweetId == Guid.Parse(TweetId));
+            Tweet tweet = _tweetContext.GetTweet(x => x.ID == Guid.Parse(TweetId));
 
             User user = _userContext.GetById(tweet.UserId);
 
@@ -111,8 +108,7 @@ namespace Tvitter.Web.Controllers
             Like like = _likeContext.GetFirstOrDefault(x => x.TweetId == Guid.Parse(TweetId) && x.UserId == Guid.Parse(UserID));
             _likeContext.RemovePerma(like);
 
-            Tweet tweet = _tweetContext.GetFirstOrDefault(x => x.ID == Guid.Parse(TweetId));
-            tweet.Likes = _likeContext.GetDefault(x => x.TweetId == Guid.Parse(TweetId));
+            Tweet tweet = _tweetContext.GetTweet(x => x.ID == Guid.Parse(TweetId));
 
             User user = _userContext.GetById(tweet.UserId);
 

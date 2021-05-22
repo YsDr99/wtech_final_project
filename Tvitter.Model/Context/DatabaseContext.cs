@@ -32,7 +32,6 @@ namespace Tvitter.Model
             modelBuilder.ApplyConfiguration(new ChatMap());
             modelBuilder.ApplyConfiguration(new MessageMap());
             modelBuilder.ApplyConfiguration(new NotificationMap());
-            modelBuilder.ApplyConfiguration(new CommentMap());
             modelBuilder.ApplyConfiguration(new LikeMap());
             modelBuilder.ApplyConfiguration(new MentionMap());
             modelBuilder.ApplyConfiguration(new TweetMap());
@@ -48,7 +47,6 @@ namespace Tvitter.Model
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Mention> Mentions { get; set; }
         public DbSet<Tweet> Tweets { get; set; }

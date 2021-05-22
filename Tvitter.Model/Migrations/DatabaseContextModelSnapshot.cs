@@ -19,7 +19,7 @@ namespace Tvitter.Model.Migrations
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Tvitter.Model.Chat", b =>
+            modelBuilder.Entity("Tvitter.Model.Entities.Chat", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -72,14 +72,10 @@ namespace Tvitter.Model.Migrations
                     b.ToTable("Chats");
                 });
 
-            modelBuilder.Entity("Tvitter.Model.Entities.Comment", b =>
+            modelBuilder.Entity("Tvitter.Model.Entities.Follow", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CommentTweetId")
-                        .HasMaxLength(100)
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedComputerName")
@@ -92,6 +88,14 @@ namespace Tvitter.Model.Migrations
                     b.Property<string>("CreatedIP")
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
+
+                    b.Property<Guid>("FollowerId")
+                        .HasMaxLength(100)
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FollowingId")
+                        .HasMaxLength(100)
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifiedComputerName")
                         .HasMaxLength(255)
@@ -107,19 +111,13 @@ namespace Tvitter.Model.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TweetId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("TweetId");
+                    b.HasIndex("FollowerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("FollowingId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Follows");
                 });
 
             modelBuilder.Entity("Tvitter.Model.Entities.Like", b =>
@@ -214,6 +212,104 @@ namespace Tvitter.Model.Migrations
                     b.ToTable("Mentions");
                 });
 
+            modelBuilder.Entity("Tvitter.Model.Entities.Message", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedComputerName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedIP")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<bool>("IsPerson1Sent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedComputerName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedIP")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ChatId");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("Tvitter.Model.Entities.Notification", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedComputerName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedIP")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedComputerName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedIP")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("Tvitter.Model.Entities.Tag", b =>
                 {
                     b.Property<Guid>("ID")
@@ -263,6 +359,9 @@ namespace Tvitter.Model.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("BelongsTo")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CreatedComputerName")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -273,9 +372,6 @@ namespace Tvitter.Model.Migrations
                     b.Property<string>("CreatedIP")
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
-
-                    b.Property<bool>("IsComment")
-                        .HasColumnType("bit");
 
                     b.Property<string>("MediaUrl")
                         .HasMaxLength(1000)
@@ -303,167 +399,28 @@ namespace Tvitter.Model.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<int>("Type")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("IsComment");
+                    b.HasIndex("BelongsTo");
 
                     b.HasIndex("TagId");
+
+                    b.HasIndex("Type");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Tweets");
                 });
 
-            modelBuilder.Entity("Tvitter.Model.Follow", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedComputerName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedIP")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<Guid>("FollowerId")
-                        .HasMaxLength(100)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FollowingId")
-                        .HasMaxLength(100)
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ModifiedComputerName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedIP")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("FollowerId");
-
-                    b.HasIndex("FollowingId");
-
-                    b.ToTable("Follows");
-                });
-
-            modelBuilder.Entity("Tvitter.Model.Message", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ChatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("CreatedComputerName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedIP")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<bool>("IsPerson1Sent")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedComputerName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedIP")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ChatId");
-
-                    b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("Tvitter.Model.Notification", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("CreatedComputerName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedIP")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedComputerName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedIP")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Notifications");
-                });
-
-            modelBuilder.Entity("Tvitter.Model.User", b =>
+            modelBuilder.Entity("Tvitter.Model.Entities.User", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -550,30 +507,11 @@ namespace Tvitter.Model.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Tvitter.Model.Chat", b =>
+            modelBuilder.Entity("Tvitter.Model.Entities.Chat", b =>
                 {
-                    b.HasOne("Tvitter.Model.User", null)
+                    b.HasOne("Tvitter.Model.Entities.User", null)
                         .WithMany("Chats")
                         .HasForeignKey("UserID");
-                });
-
-            modelBuilder.Entity("Tvitter.Model.Entities.Comment", b =>
-                {
-                    b.HasOne("Tvitter.Model.Entities.Tweet", "Tweet")
-                        .WithMany("Comments")
-                        .HasForeignKey("TweetId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Tvitter.Model.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Tweet");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Tvitter.Model.Entities.Like", b =>
@@ -584,7 +522,7 @@ namespace Tvitter.Model.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Tvitter.Model.User", "User")
+                    b.HasOne("Tvitter.Model.Entities.User", "User")
                         .WithMany("Likes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -603,7 +541,7 @@ namespace Tvitter.Model.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Tvitter.Model.User", "User")
+                    b.HasOne("Tvitter.Model.Entities.User", "User")
                         .WithMany("Mentions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -614,13 +552,35 @@ namespace Tvitter.Model.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Tvitter.Model.Entities.Message", b =>
+                {
+                    b.HasOne("Tvitter.Model.Entities.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+                });
+
+            modelBuilder.Entity("Tvitter.Model.Entities.Notification", b =>
+                {
+                    b.HasOne("Tvitter.Model.Entities.User", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Tvitter.Model.Entities.Tweet", b =>
                 {
                     b.HasOne("Tvitter.Model.Entities.Tag", "Tag")
                         .WithMany("Tweets")
                         .HasForeignKey("TagId");
 
-                    b.HasOne("Tvitter.Model.User", "User")
+                    b.HasOne("Tvitter.Model.Entities.User", "User")
                         .WithMany("Tweets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -631,29 +591,7 @@ namespace Tvitter.Model.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Tvitter.Model.Message", b =>
-                {
-                    b.HasOne("Tvitter.Model.Chat", "Chat")
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Chat");
-                });
-
-            modelBuilder.Entity("Tvitter.Model.Notification", b =>
-                {
-                    b.HasOne("Tvitter.Model.User", "User")
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Tvitter.Model.Chat", b =>
+            modelBuilder.Entity("Tvitter.Model.Entities.Chat", b =>
                 {
                     b.Navigation("Messages");
                 });
@@ -665,18 +603,14 @@ namespace Tvitter.Model.Migrations
 
             modelBuilder.Entity("Tvitter.Model.Entities.Tweet", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Likes");
 
                     b.Navigation("Mentions");
                 });
 
-            modelBuilder.Entity("Tvitter.Model.User", b =>
+            modelBuilder.Entity("Tvitter.Model.Entities.User", b =>
                 {
                     b.Navigation("Chats");
-
-                    b.Navigation("Comments");
 
                     b.Navigation("Likes");
 

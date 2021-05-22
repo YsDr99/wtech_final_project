@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tvitter.Core.Entity.Enum;
 using Tvitter.Core.Map;
 using Tvitter.Model.Entities;
 
@@ -16,12 +17,13 @@ namespace Tvitter.Model.Maps
         {
 
             builder.ToTable("Tweets");
+            builder.HasIndex(x => x.BelongsTo);
+            builder.HasIndex(x => x.Type);
             builder.Property(x => x.MediaUrl).HasMaxLength(1000).IsRequired(false);
             builder.Property(x => x.Text).HasMaxLength(1000).IsRequired(true);
             builder.Property(x => x.UserId).IsRequired(true);
+            builder.Property(x => x.Type).IsRequired(true).HasDefaultValue(TweetType.tweet);
             builder.Property(x => x.TagId).IsRequired(false);
-            builder.Property(x => x.IsComment).IsRequired(true);
-            builder.HasIndex(x => x.IsComment).IsUnique(false);
 
             base.Configure(builder);
         }

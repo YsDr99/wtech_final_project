@@ -35,3 +35,10 @@
 	<li>Users can see their following users' tweets at home page</li>
 	<li>Users can Like/unlike tweets</li>
 </ul>
+
+### 22.05.2021
+<ul>
+	<li>Tweet table updated, comment table deleted</li>
+	<li>Users can comment to tweets</li>
+	<li>Nested comments are supported</li>
+</ul>

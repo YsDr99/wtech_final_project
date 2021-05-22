@@ -5,15 +5,31 @@
 <div class="w-100">
     <form asp-action="Index" method="post" enctype="multipart/form-data">
         <div class="form-outline">
-            <textarea class="form-control"
-                      asp-for="Text"
-                      placeholder="What's Happening?"
-                      style="resize:none"
-                      rows="3"></textarea>
+            @if (Model.Parent == Guid.Empty)
+            {
+                <textarea class="form-control"
+                          asp-for="Text"
+                          placeholder="What's Happening?"
+                          style="resize:none"
+                          rows="3"></textarea>
+            }
+            else
+            {
+                Model.Text = "";
+                <textarea class="form-control"
+                          asp-for="Text"
+                          placeholder="Write Comment"
+                          style="resize:none"
+                          rows="3"></textarea>
+            }
+
         </div>
         <div class="d-flex justify-content-between mt-1 row">
+
+            <input type="text" asp-for="Parent" hidden />
+
             <div class="form-group">
-                <input type="file" name="files" accept="image/*" class="ml-3"/>
+                <input type="file" name="files" accept="image/*" class="ml-3" />
             </div>
             <input type="submit" value="Tweet" class="btn btn-info mr-3">
         </div>

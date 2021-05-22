@@ -41,3 +41,7 @@ function UnlikeTweet(u, t) {
     });
 
 }
+
+function goBack() {
+    window.history.back();
+}
