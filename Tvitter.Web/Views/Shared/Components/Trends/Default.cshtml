@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Tuple<string, int>>
+
+
+<div class="card">
+    <div class="card-body">
+        <h1>Trends</h1>
+        <ul class="list-group">
+
+            @foreach (var trend in Model.Take(5))
+            {
+                <li class="list-group-item"><a asp-controller="Tweet" asp-action="Trend" asp-route-tag="@trend.Item1">@trend.Item1</a> <br /> <span class="badge">@trend.Item2 tweets</span></li>
+            }
+        </ul>
+    </div>
+</div>

@@ -34,6 +34,7 @@ namespace Tvitter.Web
 
             services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>));
             services.AddScoped(typeof(ITweetService<>), typeof(TweetService<>));
+            services.AddScoped(typeof(ITagService<>), typeof(TagService<>));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => { options.LoginPath = "/Login"; });
@@ -92,7 +93,7 @@ namespace Tvitter.Web
                 endpoints.MapControllerRoute(
                     name: "tweet",
                     pattern: "Tweet/{id}",
-                    defaults: new { controller = "Tweet", action = "Index" ,id = "id"});
+                    defaults: new { controller = "Tweet", action = "Index"});
             });
         }
     }

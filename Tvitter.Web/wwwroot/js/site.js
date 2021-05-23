@@ -15,7 +15,9 @@ function LikeTweet(u, t) {
         success: function (result) {
 
             $("#view" + t).html(result);
-
+            $("p").html(function (_, html) {
+                return html.replace(/(\#\w+)/g, '<span class="blue">$1</span>');
+            });
         },
         error: function (e) {
             console.log(e.responseText);
@@ -35,13 +37,18 @@ function UnlikeTweet(u, t) {
         success: function (result) {
 
             $("#view" + t).html(result);
-
+            $("p").html(function (_, html) {
+                return html.replace(/(\#\w+)/g, '<span class="blue">$1</span>');
+            });
         }
 
     });
 
 }
 
-function goBack() {
-    window.history.back();
-}
+$(document).ready(function () {
+    $("p").html(function (_, html) {
+        html = html.replace(/(\#\w+)/g, '<a href="/Tweet/Trend?tag=$1"><span class="blue">$1</span></a>');
+        return html.replace(/=\#/g, '='+encodeURIComponent('#'));
+    });
+});

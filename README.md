@@ -42,3 +42,11 @@
 	<li>Users can comment to tweets</li>
 	<li>Nested comments are supported</li>
 </ul>
+
+### 23.05.2021
+<ul>
+	<li>Tags can be used in tweets</li>
+	<li>Listing specific tag tweets added</li>
+	<li>Trends component added</li>
+	<li>Transforming all tags a link added</li>
+</ul>

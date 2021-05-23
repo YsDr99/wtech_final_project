@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Tvitter.Core.Entity.Enum;
 using Tvitter.Core.Service;
@@ -26,10 +27,11 @@ namespace Tvitter.Web.Controllers
         private readonly ICoreService<Follow> _followContext;
         private readonly ITweetService<Tweet> _tweetContext;
         private readonly ICoreService<Like> _likeContext;
+        private readonly ICoreService<Tag> _tagContext;
         private IWebHostEnvironment _environment;
         public HomeController(ILogger<HomeController> logger, ICoreService<User> context,
             ICoreService<Follow> followContext, ITweetService<Tweet> tweetContext, IWebHostEnvironment environment,
-            ICoreService<Like> likeContext)
+            ICoreService<Like> likeContext, ICoreService<Tag> tagContext)
         {
             _logger = logger;
             _userContext = context;
@@ -37,6 +39,7 @@ namespace Tvitter.Web.Controllers
             _tweetContext = tweetContext;
             _environment = environment;
             _likeContext = likeContext;
+            _tagContext = tagContext;
         }
 
 
@@ -50,16 +53,22 @@ namespace Tvitter.Web.Controllers
                             on u.ID equals f.FollowingId
                         join t in _tweetContext.GetTweets(x => x.Type == TweetType.tweet)
                             on u.ID equals t.UserId
-                        orderby t.CreatedDate descending
                         select Tuple.Create<User, Tweet>(u, t);
-            user.HomePageTweets = query.ToList();
+
+            var query2 = from u in _userContext.GetDefault(x => x.ID == id)
+                         join t in _tweetContext.GetTweets(x => x.Type == TweetType.tweet)
+                             on u.ID equals t.UserId
+                         select Tuple.Create<User, Tweet>(u, t);
+
+            var result = query.Union(query2);
+            user.HomePageTweets = result.ToList().OrderByDescending(x => x.Item2.CreatedDate).ToList();
 
             return View(Tuple.Create(user, new Tweet()));
 
         }
 
         [HttpPost]
-        public IActionResult Index(Tweet tweet)
+        public IActionResult PostTweet(Tweet tweet)
         {
             Guid id = Guid.Parse(User.FindFirst("ID").Value);
 
@@ -80,9 +89,42 @@ namespace Tvitter.Web.Controllers
                         }
                     }
                 }
-                _tweetContext.Add(tweet);
+
+                var input = tweet.Text;
+                var regex = new Regex(@"#\w+");
+                var matches = regex.Matches(input);
+                if (matches.Count > 0)
+                {
+                    foreach (var match in matches)
+                    {
+                        string tagName = match.ToString().ToLower();
+                        Tag tag = new Tag();
+                        if (!_tagContext.Any(x => x.Name == tagName))
+                        {
+                            tag.Name = tagName;
+                            _tagContext.Add(tag);
+                        }
+                    }
+
+                    List<Tag> tags = _tagContext.GetAll().ToList();
+                    foreach (var match in matches)
+                    {
+                        string tagName = match.ToString().ToLower();
+                        Tag tag = new Tag();
+
+                        tag = tags.FirstOrDefault(x => x.Name == tagName);
+                        tweet.TagId = tag.ID;
+                        _tweetContext.Add(tweet);
+                        tweet.ID = Guid.Empty;
+                    }
+                }
+                else
+                {
+                    _tweetContext.Add(tweet);
+                }
+
             }
-            return RedirectToAction("Index", "Profile");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -92,14 +134,14 @@ namespace Tvitter.Web.Controllers
             like.UserId = Guid.Parse(UserID);
             like.TweetId = Guid.Parse(TweetId);
             _likeContext.Add(like);
-            
+
 
             Tweet tweet = _tweetContext.GetTweet(x => x.ID == Guid.Parse(TweetId));
 
             User user = _userContext.GetById(tweet.UserId);
 
             return PartialView("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(user, tweet));
-           
+
         }
 
         [HttpPost]

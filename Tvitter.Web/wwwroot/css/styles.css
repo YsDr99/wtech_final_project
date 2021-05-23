@@ -10011,7 +10011,7 @@ h3 {
 }
 
 #sidebar-wrapper {
-  min-height: 100vh;
+  min-height: 60vh;
   margin-left: -15rem;
   transition: margin 0.25s ease-out;
 }

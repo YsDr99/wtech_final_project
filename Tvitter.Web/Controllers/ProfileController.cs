@@ -18,18 +18,16 @@ namespace Tvitter.Web.Controllers
         private readonly ICoreService<User> _userContext;
         private readonly ICoreService<Follow> _followContext;
         private readonly ITweetService<Tweet> _tweetContext;
-        private readonly ICoreService<Like> _likeContext;
 
         private IWebHostEnvironment _environment;
 
         public ProfileController(ICoreService<User> usercontext, ICoreService<Follow> followContext,
-            ITweetService<Tweet> tweetContext, IWebHostEnvironment environment, ICoreService<Like> likeContext)
+            ITweetService<Tweet> tweetContext, IWebHostEnvironment environment)
         {
             _userContext = usercontext;
             _followContext = followContext;
             _tweetContext = tweetContext;
             _environment = environment;
-            _likeContext = likeContext;
         }
 
         public IActionResult Index()
@@ -167,6 +165,7 @@ namespace Tvitter.Web.Controllers
             var query = from u in _userContext.GetAll()
                         join f in _followContext.GetDefault(x => x.FollowingId == userId)
                             on u.ID equals f.FollowerId
+                        orderby f.CreatedDate descending
                         select u;
             List<User> result = query.ToList();
             return View(result);
@@ -179,6 +178,7 @@ namespace Tvitter.Web.Controllers
             var query = from u in _userContext.GetAll()
                         join f in _followContext.GetDefault(x => x.FollowerId == userId)
                             on u.ID equals f.FollowingId
+                        orderby f.CreatedDate descending
                         select u;
             List<User> result = query.ToList();
             return View(result);
@@ -187,7 +187,8 @@ namespace Tvitter.Web.Controllers
         public IActionResult Tweets(string username)
         {
             User user = _userContext.GetFirstOrDefault(x => x.Username == username);
-            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet);
+            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet)
+                .OrderByDescending(x => x.CreatedDate).ToList();
 
             return View(user);
         }

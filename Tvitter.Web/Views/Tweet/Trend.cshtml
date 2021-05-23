@@ -1,0 +1,17 @@
+﻿@model Tag
+@{
+    ViewData["Title"] = "Tweets";
+}
+
+<div class="py-4 px-4">
+
+    <div class="col-11 mx-auto">
+        @foreach (var tweet in Model.Tweets)
+        {
+            <div id="view@(tweet.ID.ToString())">
+                @await Html.PartialAsync("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(tweet.User, tweet))
+            </div>
+        }
+
+    </div>
+</div>

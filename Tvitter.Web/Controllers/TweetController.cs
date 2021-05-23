@@ -14,15 +14,18 @@ namespace Tvitter.Web.Controllers
     public class TweetController : Controller
     {
         private readonly ITweetService<Tweet> _tweetContext;
+        private readonly ITagService<Tag> _tagContext;
         private readonly ICoreService<User> _userContext;
         private IWebHostEnvironment _environment;
 
 
-        public TweetController(ITweetService<Tweet> tweetContext, ICoreService<User> userContext, IWebHostEnvironment environment)
+        public TweetController(ITweetService<Tweet> tweetContext, ICoreService<User> userContext,
+            IWebHostEnvironment environment, ITagService<Tag> tagContext)
         {
             _tweetContext = tweetContext;
             _userContext = userContext;
             _environment = environment;
+            _tagContext = tagContext;
 
         }
 
@@ -34,8 +37,16 @@ namespace Tvitter.Web.Controllers
             return View(Tuple.Create(tweet.User,tweet));
         }
 
+        public IActionResult Trend(string tag)
+        {
+            tag = tag.ToLower();
+            Tag _tag = _tagContext.GetTag(x => x.Name == tag);
+
+            return View(_tag);
+        }
+
         [HttpPost]
-        public IActionResult Index(Tweet tweet)
+        public IActionResult PostTweet(Tweet tweet)
         {
             Guid id = Guid.Parse(User.FindFirst("ID").Value);
 

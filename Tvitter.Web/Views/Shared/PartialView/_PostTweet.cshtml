@@ -3,9 +3,9 @@
     Layout = null;
 }
 <div class="w-100">
-    <form asp-action="Index" method="post" enctype="multipart/form-data">
+    <form asp-action="PostTweet" method="post" enctype="multipart/form-data">
         <div class="form-outline">
-            @if (Model.Parent == Guid.Empty)
+            @if (Model.Parent == Guid.Empty || Model.Parent == null)
             {
                 <textarea class="form-control"
                           asp-for="Text"
