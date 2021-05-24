@@ -28,10 +28,11 @@ namespace Tvitter.Web.Controllers
         private readonly ITweetService<Tweet> _tweetContext;
         private readonly ICoreService<Like> _likeContext;
         private readonly ICoreService<Tag> _tagContext;
+        private readonly ICoreService<Mention> _mentionContext;
         private IWebHostEnvironment _environment;
         public HomeController(ILogger<HomeController> logger, ICoreService<User> context,
             ICoreService<Follow> followContext, ITweetService<Tweet> tweetContext, IWebHostEnvironment environment,
-            ICoreService<Like> likeContext, ICoreService<Tag> tagContext)
+            ICoreService<Like> likeContext, ICoreService<Tag> tagContext, ICoreService<Mention> mentionContext)
         {
             _logger = logger;
             _userContext = context;
@@ -40,6 +41,7 @@ namespace Tvitter.Web.Controllers
             _environment = environment;
             _likeContext = likeContext;
             _tagContext = tagContext;
+            _mentionContext = mentionContext;
         }
 
 
@@ -67,11 +69,16 @@ namespace Tvitter.Web.Controllers
 
         }
 
+        public IActionResult NameNotFound()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult PostTweet(Tweet tweet)
         {
             Guid id = Guid.Parse(User.FindFirst("ID").Value);
-
+            Guid lastAddedTweetId = Guid.Empty;
             if (ModelState.IsValid)
             {
                 tweet.UserId = id;
@@ -91,8 +98,13 @@ namespace Tvitter.Web.Controllers
                 }
 
                 var input = tweet.Text;
+
                 var regex = new Regex(@"#\w+");
                 var matches = regex.Matches(input);
+
+                var regexMention = new Regex(@"@\w+");
+                var matchesMention = regexMention.Matches(input);
+
                 if (matches.Count > 0)
                 {
                     foreach (var match in matches)
@@ -115,12 +127,36 @@ namespace Tvitter.Web.Controllers
                         tag = tags.FirstOrDefault(x => x.Name == tagName);
                         tweet.TagId = tag.ID;
                         _tweetContext.Add(tweet);
+
+                        if (lastAddedTweetId == Guid.Empty)
+                        {
+                            lastAddedTweetId = tweet.ID;
+
+                        }
+
                         tweet.ID = Guid.Empty;
+                        tweet.Type = TweetType.tagCopy;
                     }
                 }
                 else
                 {
                     _tweetContext.Add(tweet);
+                    lastAddedTweetId = tweet.ID;
+                }
+
+                if (matchesMention.Count > 0)
+                {
+
+                    foreach (var mention in matchesMention)
+                    {
+                        var username = mention.ToString().Substring(1);
+                        var user = _userContext.GetFirstOrDefault(x => x.Username == username);
+                        if (user != null)
+                        {
+                            Mention mention1 = new Mention() { UserId = user.ID, TweetId = lastAddedTweetId };
+                            _mentionContext.Add(mention1);
+                        }
+                    }
                 }
 
             }

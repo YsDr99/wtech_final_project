@@ -31,7 +31,10 @@ namespace Tvitter.Service
         public T GetTag(Expression<Func<T, bool>> exp)
         {
             var tag = context.Set<T>().FirstOrDefault(exp);
-            tag.Tweets = _tweetContext.GetTweets(x => x.TagId == tag.ID);
+            if(tag != null)
+            {
+                tag.Tweets = _tweetContext.GetTweets(x => x.TagId == tag.ID).OrderByDescending(x => x.CreatedDate).ToList();
+            }
             return tag;
         }
 

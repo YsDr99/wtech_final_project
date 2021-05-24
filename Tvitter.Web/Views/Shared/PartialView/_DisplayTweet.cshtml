@@ -37,6 +37,18 @@
 
                 </div>
                 <div>
+                    @if (Model.Item2.Type == Tvitter.Core.Entity.Enum.TweetType.comment)
+                    {
+                        <p class="mt-2">
+                            <b>
+                                Replying to this
+                                <a href="/Tweet/@Model.Item2.BelongsTo">
+                                    <span class="blue">tweet</span>
+                                </a>
+                            </b>
+                        </p>
+
+                    }
                     <p class="mt-2">@Model.Item2.Text</p>
                 </div>
                 @if (Model.Item2.MediaUrl != null)
@@ -44,7 +56,7 @@
                     <img src="@Url.Content(Model.Item2.MediaUrl)" alt="" class="card-img-bottom mb-2">
 
                 }
-                <a href="/Tweet/@(Model.Item2.ID.ToString())" class="btn btn-outline-success btn-sm" >
+                <a href="/Tweet/@(Model.Item2.ID.ToString())" class="btn btn-outline-success btn-sm">
                     <span> @Model.Item2.Comments.Count</span>
                     <i class="far fa-comment"></i>
                 </a>

@@ -9,6 +9,7 @@ namespace Tvitter.Core.Entity.Enum
     public enum TweetType
     {
         tweet = 0,
-        comment
+        comment,
+        tagCopy
     }
 }

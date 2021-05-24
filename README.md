@@ -50,3 +50,12 @@
 	<li>Trends component added</li>
 	<li>Transforming all tags a link added</li>
 </ul>
+
+### 24.05.2021
+<ul>
+	<li>Multiple tagged tweet bug fixed</li>
+	<li>Mentions can be used in tweets</li>
+	<li>All mentions are linked to user profile, if exist</li>
+	<li>Tags and mentions not working on comments fixed</li>
+	<li>Tagged comments are now can be listed in trends</li>
+</ul>

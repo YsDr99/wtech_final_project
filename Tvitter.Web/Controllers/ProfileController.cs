@@ -97,16 +97,19 @@ namespace Tvitter.Web.Controllers
             }
             else
             {
+                username = username.Trim('@'); 
                 if (User.FindFirst("Username").Value == username)
                 {
                     return RedirectToAction("Index", "Profile");
                 }
+
                 var user = _userContext.GetFirstOrDefault(x=>x.Username == username);
                 if(user == null)
                 {
-                    Guid id = Guid.Parse(User.FindFirst("ID").Value);
-                    user = _userContext.GetById(id);
+                    TempData["NotFoundName"] = "@" + username;
+                    return RedirectToAction("NameNotFound", "Home");
                 }
+
                 user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
                 user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
                 user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet).OrderByDescending(y => y.CreatedDate).ToList();

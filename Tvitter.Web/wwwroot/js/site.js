@@ -13,15 +13,12 @@ function LikeTweet(u, t) {
         },
         dataType: 'html',
         success: function (result) {
+            result = result.replace(/(\#\w+)/g, '<a href="/Tweet/Trend?tag=$1"><span class="blue">$1</span></a>');
+            result = result.replace(/=\#/g, '=' + encodeURIComponent('#'));
+            result = result.replace(/(\@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
 
             $("#view" + t).html(result);
-            $("p").html(function (_, html) {
-                return html.replace(/(\#\w+)/g, '<span class="blue">$1</span>');
-            });
         },
-        error: function (e) {
-            console.log(e.responseText);
-        }
     });
 }
 function UnlikeTweet(u, t) {
@@ -35,11 +32,11 @@ function UnlikeTweet(u, t) {
         },
         dataType: 'html',
         success: function (result) {
+            result = result.replace(/(\#\w+)/g, '<a href="/Tweet/Trend?tag=$1"><span class="blue">$1</span></a>');
+            result = result.replace(/=\#/g, '=' + encodeURIComponent('#'));
+            result = result.replace(/(\@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
 
             $("#view" + t).html(result);
-            $("p").html(function (_, html) {
-                return html.replace(/(\#\w+)/g, '<span class="blue">$1</span>');
-            });
         }
 
     });
@@ -49,6 +46,12 @@ function UnlikeTweet(u, t) {
 $(document).ready(function () {
     $("p").html(function (_, html) {
         html = html.replace(/(\#\w+)/g, '<a href="/Tweet/Trend?tag=$1"><span class="blue">$1</span></a>');
-        return html.replace(/=\#/g, '='+encodeURIComponent('#'));
+        html = html.replace(/=\#/g, '=' + encodeURIComponent('#'));
+        html = html.replace(/(\@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
+        return html;
     });
 });
+
+function goBack() {
+    window.history.back();
+}

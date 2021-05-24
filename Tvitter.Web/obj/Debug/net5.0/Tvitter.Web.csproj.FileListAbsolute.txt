@@ -164,3 +164,4 @@ C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\bin\Debug\net5.0\libm
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Tweet\Index.cshtml.g.cs
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Shared\Components\Trends\Default.cshtml.g.cs
 C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Tweet\Trend.cshtml.g.cs
+C:\Users\yunus\Desktop\wtech\final\Tvitter.Web\Tvitter.Web\obj\Debug\net5.0\Razor\Views\Home\NameNotFound.cshtml.g.cs

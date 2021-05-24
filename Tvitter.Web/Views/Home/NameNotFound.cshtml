@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "Not Found";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-9 mx-auto mt-4">
+            <div class="error-template">
+                <h1>
+                    Oops!
+                </h1>
+                <h2>
+                    @TempData["NotFoundName"] Not Found
+                </h2>
+                <div class="error-details">
+                    Nothing found from specified key
+                </div>
+                <div class="error-actions mt-2">
+                    <button onClick="goBack()" class="btn btn-primary btn-lg">
+                        Back
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

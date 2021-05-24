@@ -83,6 +83,11 @@ namespace Tvitter.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (user.Username.Contains(' '))
+                {
+                    TempData["ErrorMessage"] = "White spaces are not allowed.";
+                    return View(user);
+                }
                 if (_context.Any(x => x.Username == user.Username))
                 {
                     TempData["ErrorMessage"] = "Username Exist.";
