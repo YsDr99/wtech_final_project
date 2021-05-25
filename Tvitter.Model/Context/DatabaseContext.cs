@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace Tvitter.Model
 
 
             string computerName = Environment.MachineName;
-            string ipAddress = "127.0.0.1";//TODO:
+
             DateTime date = DateTime.Now;
 
             foreach (var item in modifiedEntities)
@@ -72,13 +73,11 @@ namespace Tvitter.Model
                     {
                         case EntityState.Added:
                             entity.CreatedComputerName = computerName;
-                            entity.CreatedIP = ipAddress;
                             entity.CreatedDate = date;
                             break;
 
                         case EntityState.Modified:
                             entity.ModifiedComputerName = computerName;
-                            entity.ModifiedIP = ipAddress;
                             entity.ModifiedDate = date;
                             break;
                     }

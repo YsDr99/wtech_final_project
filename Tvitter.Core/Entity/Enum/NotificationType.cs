@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Tvitter.Core.Entity.Enum
 {
-    public enum TweetType
+    public enum NotificationType
     {
-        Tweet = 0,
-        Comment,
-        TagCopy
+        None=0,
+        Mention,
+        Login
     }
 }

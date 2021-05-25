@@ -36,7 +36,7 @@ namespace Tvitter.Web.Controllers
             var user = _userContext.GetById(id);
             user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
             user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet).OrderByDescending(y => y.CreatedDate).ToList();
+            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.Tweet).OrderByDescending(y => y.CreatedDate).ToList();
 
             return View(user);
         }
@@ -91,7 +91,7 @@ namespace Tvitter.Web.Controllers
                 var user = _userContext.GetById(id);
                 user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
                 user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-                user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet).OrderByDescending(y => y.CreatedDate).ToList();
+                user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.Tweet).OrderByDescending(y => y.CreatedDate).ToList();
 
                 return View(user);
             }
@@ -112,7 +112,7 @@ namespace Tvitter.Web.Controllers
 
                 user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
                 user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-                user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet).OrderByDescending(y => y.CreatedDate).ToList();
+                user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.Tweet).OrderByDescending(y => y.CreatedDate).ToList();
 
                 return View(user);
             }
@@ -190,7 +190,7 @@ namespace Tvitter.Web.Controllers
         public IActionResult Tweets(string username)
         {
             User user = _userContext.GetFirstOrDefault(x => x.Username == username);
-            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.tweet)
+            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.Tweet)
                 .OrderByDescending(x => x.CreatedDate).ToList();
 
             return View(user);

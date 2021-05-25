@@ -13,11 +13,11 @@ function LikeTweet(u, t) {
         },
         dataType: 'html',
         success: function (result) {
-            result = result.replace(/(\#\w+)/g, '<a href="/Tweet/Trend?tag=$1"><span class="blue">$1</span></a>');
-            result = result.replace(/=\#/g, '=' + encodeURIComponent('#'));
-            result = result.replace(/(\@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
-
+            result = result.replace(/(@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
+            result = result.replace(/="\/@/g, '="/');
             $("#view" + t).html(result);
+            makeLinks(1);
+
         },
     });
 }
@@ -32,11 +32,10 @@ function UnlikeTweet(u, t) {
         },
         dataType: 'html',
         success: function (result) {
-            result = result.replace(/(\#\w+)/g, '<a href="/Tweet/Trend?tag=$1"><span class="blue">$1</span></a>');
-            result = result.replace(/=\#/g, '=' + encodeURIComponent('#'));
-            result = result.replace(/(\@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
-
+            result = result.replace(/(@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
+            result = result.replace(/="\/@/g, '="/');
             $("#view" + t).html(result);
+            makeLinks(1);
         }
 
     });
@@ -44,14 +43,20 @@ function UnlikeTweet(u, t) {
 }
 
 $(document).ready(function () {
+    makeLinks(0);
+});
+
+function makeLinks(i) {
     $("p").html(function (_, html) {
         html = html.replace(/(\#\w+)/g, '<a href="/Tweet/Trend?tag=$1"><span class="blue">$1</span></a>');
         html = html.replace(/=\#/g, '=' + encodeURIComponent('#'));
-        html = html.replace(/(\@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
+        if (i === 0) {
+            html = html.replace(/(@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
+            html = html.replace(/="\/@/g, '="/');
+        }
         return html;
     });
-});
-
+}
 function goBack() {
     window.history.back();
 }

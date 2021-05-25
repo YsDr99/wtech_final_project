@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Notification>
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<div class="container mt-5">
+
+    @foreach (var item in Model)
+    {
+        <div class=" mb-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-start w-100">
+                        @if (item.Type == Tvitter.Core.Entity.Enum.NotificationType.Login)
+                        {
+                            <p>@item.Content</p>
+                        }
+                        else
+                        {
+                            <p>@item.Content <a href="/Tweet/@item.TweetId"> tweet</a></p> 
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

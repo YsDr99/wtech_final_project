@@ -59,3 +59,11 @@
 	<li>Tags and mentions not working on comments fixed</li>
 	<li>Tagged comments are now can be listed in trends</li>
 </ul>
+
+### 25.05.2021
+<ul>
+	<li>Login from new device now pushes notification</li>
+	<li>Mentions now pushes notification</li>
+	<li>Main layout displays new notification count</li>
+	<li>Improved code stability for invalid paramaters</li>
+</ul>

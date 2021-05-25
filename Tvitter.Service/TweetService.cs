@@ -30,11 +30,17 @@ namespace Tvitter.Service
 
         public T GetTweet(Guid id)
         {
-            var tweet = context.Set<T>().Where(x => x.Status != Status.Deleted).Include(x => x.Likes).Where(x => x.ID == id).First();
-            if (tweet == null)
+            try
+            {
+                var tweet = context.Set<T>().Where(x => x.Status != Status.Deleted).Include(x => x.Likes).Where(x => x.ID == id).First();
+                tweet.Comments = GetTweets(x => tweet.ID == x.BelongsTo).OrderByDescending(x => x.CreatedDate).ToList<Tweet>();
+                return tweet;
+            }
+            catch
+            {
                 return null;
-            tweet.Comments = GetTweets(x => tweet.ID == x.BelongsTo).OrderByDescending(x => x.CreatedDate).ToList<Tweet>();
-            return tweet;
+            }
+
         }
 
         public ICollection<T> GetTweets(Expression<Func<T, bool>> exp)
@@ -43,7 +49,7 @@ namespace Tvitter.Service
             if (tweets == null)
                 return null;
 
-            var comments = GetDefault(x => x.Type == TweetType.comment).ToList();
+            var comments = GetDefault(x => x.Type == TweetType.Comment).ToList();
             foreach (Tweet tw in tweets)
             {
                 tw.Comments = comments.Where(x => tw.ID == x.BelongsTo).OrderByDescending(x => x.CreatedDate).ToList<Tweet>();

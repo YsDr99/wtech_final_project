@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tvitter.Core.Service;
 using Tvitter.Model.Entities;
+using Tvitter.Web.Utility;
 
 namespace Tvitter.Web.Controllers
 {
@@ -16,10 +17,14 @@ namespace Tvitter.Web.Controllers
     public class LoginController : Controller
     {
         private readonly ICoreService<User> _context;
+        private readonly ICoreService<Notification> _notificationContext;
 
-        public LoginController(ICoreService<User> context)
+
+        public LoginController(ICoreService<User> context, ICoreService<Notification> notificationContext)
         {
             _context = context;
+            _notificationContext = notificationContext;
+
         }
 
         public IActionResult Index()
@@ -50,6 +55,23 @@ namespace Tvitter.Web.Controllers
                     var userIdentity = new ClaimsIdentity(claims, "login");
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                     await HttpContext.SignInAsync(principal);
+
+                    var clientIpAdress = HttpContext.GetRemoteIPAddress().ToString();
+
+                    if (logged.ModifiedIP != clientIpAdress || logged.ModifiedIP == null)
+                    {
+                        Notification notification = new Notification()
+                        {
+                            UserId = logged.ID,
+                            Content = "There was a login to your account @" + logged.Username + " from a new device. (" + clientIpAdress + ") on " + DateTime.Now.ToShortDateString(),
+                            Type = Core.Entity.Enum.NotificationType.Login,
+                            Status = Core.Entity.Enum.Status.Active
+                        };
+                        _notificationContext.Add(notification);
+                    }
+
+                    logged.ModifiedIP = clientIpAdress;
+                    var result = _context.Update(logged);
                     return RedirectToAction("Index", "Home");
 
                 }
@@ -98,7 +120,11 @@ namespace Tvitter.Web.Controllers
                     TempData["ErrorMessage"] = "Email Exist.";
                     return View(user);
                 }
+
+                var clientIpAdress = HttpContext.GetRemoteIPAddress().ToString();
                 user.Password = ComputeSha256Hash(user.Password);
+                user.CreatedIP = clientIpAdress;
+
                 if (_context.Add(user))
                     ;
                 else

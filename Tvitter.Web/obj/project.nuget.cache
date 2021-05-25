@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "4YeITMi0wIrEJmmt47+CvJg+INzGQXGDSkFgi34CK1YakHnFuJac5QHn7SJ/gNUlMKddt3fetLplcoGq0itihw==",
+  "dgSpecHash": "1qwScjVlISIVPH0vV6mtBqP48tmk7Qwzbq5D4i4M8/gBsm6XrmSk28nmuAztoi8k1OXfCjpt4V7hBYXnJLYcvg==",
   "success": true,
   "projectFilePath": "C:\\Users\\yunus\\Desktop\\wtech\\final\\Tvitter.Web\\Tvitter.Web\\Tvitter.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yunus\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\yunus\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\yunus\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\yunus\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\yunus\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\yunus\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\5.0.0\\microsoft.aspnetcore.razor.language.5.0.0.nupkg.sha512",
     "C:\\Users\\yunus\\.nuget\\packages\\microsoft.aspnetcore.razor.runtime\\2.2.0\\microsoft.aspnetcore.razor.runtime.2.2.0.nupkg.sha512",

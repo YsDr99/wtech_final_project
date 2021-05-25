@@ -22,7 +22,7 @@ namespace Tvitter.Model.Maps
             builder.Property(x => x.MediaUrl).HasMaxLength(1000).IsRequired(false);
             builder.Property(x => x.Text).HasMaxLength(1000).IsRequired(true);
             builder.Property(x => x.UserId).IsRequired(true);
-            builder.Property(x => x.Type).IsRequired(true).HasDefaultValue(TweetType.tweet);
+            builder.Property(x => x.Type).IsRequired(true).HasDefaultValue(TweetType.Tweet);
             builder.Property(x => x.TagId).IsRequired(false);
 
             base.Configure(builder);

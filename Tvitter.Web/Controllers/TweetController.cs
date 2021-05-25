@@ -10,6 +10,7 @@ using Tvitter.Core.Entity.Enum;
 using Tvitter.Core.Service;
 using Tvitter.Model.Entities;
 using Tvitter.Web.Models;
+using Tvitter.Web.Utility;
 
 namespace Tvitter.Web.Controllers
 {
@@ -20,23 +21,38 @@ namespace Tvitter.Web.Controllers
         private readonly ITagService<Tag> _tagContext;
         private readonly ICoreService<User> _userContext;
         private readonly ICoreService<Mention> _mentionContext;
+        private readonly ICoreService<Notification> _notificationContext;
         private IWebHostEnvironment _environment;
 
 
         public TweetController(ITweetService<Tweet> tweetContext, ICoreService<User> userContext,
-            IWebHostEnvironment environment, ITagService<Tag> tagContext, ICoreService<Mention> mentionContext)
+            IWebHostEnvironment environment, ITagService<Tag> tagContext, ICoreService<Mention> mentionContext,
+            ICoreService<Notification> notificationContext)
         {
             _tweetContext = tweetContext;
             _userContext = userContext;
             _environment = environment;
             _tagContext = tagContext;
             _mentionContext = mentionContext;
+            _notificationContext = notificationContext;
 
         }
 
         public IActionResult Index(string id)
         {
-            Tweet tweet = _tweetContext.GetTweet(Guid.Parse(id));
+            if (!Guid.TryParse(id, out Guid tweetID))
+            {
+                TempData["NotFoundName"] = "tweet";
+                return RedirectToAction("NameNotFound", "Home");
+            }
+
+            Tweet tweet = _tweetContext.GetTweet(tweetID);
+            if(tweet == null)
+            {
+                TempData["NotFoundName"] = "tweet";
+                return RedirectToAction("NameNotFound", "Home");
+            }
+
             tweet.User = _userContext.GetById(tweet.UserId);
             tweet.Parent = tweet.ID;
             return View(Tuple.Create(tweet.User,tweet));
@@ -61,11 +77,12 @@ namespace Tvitter.Web.Controllers
         {
             Guid id = Guid.Parse(User.FindFirst("ID").Value);
             Guid lastAddedTweetId = Guid.Empty;
+            var clientIpAdress = HttpContext.GetRemoteIPAddress().ToString();
 
             if (ModelState.IsValid)
             {
                 tweet.UserId = id;
-                tweet.Type = TweetType.comment;
+                tweet.Type = TweetType.Comment;
                 tweet.BelongsTo = tweet.Parent;
                 tweet.ID = Guid.Empty;
                 if (HttpContext.Request.Form.Files != null)
@@ -86,10 +103,14 @@ namespace Tvitter.Web.Controllers
                 var input = tweet.Text;
 
                 var regex = new Regex(@"#\w+");
-                var matches = regex.Matches(input);
+                var matches = regex.Matches(input).Distinct().OfType<Match>()
+                                     .Select(m => m.Groups[0].Value)
+                                     .Distinct().ToList();
 
                 var regexMention = new Regex(@"@\w+");
-                var matchesMention = regexMention.Matches(input);
+                var matchesMention = regexMention.Matches(input).OfType<Match>()
+                                     .Select(m => m.Groups[0].Value)
+                                     .Distinct().ToList();
 
                 if (matches.Count > 0)
                 {
@@ -112,6 +133,7 @@ namespace Tvitter.Web.Controllers
 
                         tag = tags.FirstOrDefault(x => x.Name == tagName);
                         tweet.TagId = tag.ID;
+                        tweet.CreatedIP = clientIpAdress;
                         _tweetContext.Add(tweet);
 
                         if (lastAddedTweetId == Guid.Empty)
@@ -121,11 +143,12 @@ namespace Tvitter.Web.Controllers
                         }
 
                         tweet.ID = Guid.Empty;
-                        tweet.Type = TweetType.tagCopy;
+                        tweet.Type = TweetType.TagCopy;
                     }
                 }
                 else
                 {
+                    tweet.CreatedIP = clientIpAdress;
                     _tweetContext.Add(tweet);
                     lastAddedTweetId = tweet.ID;
                 }
@@ -140,7 +163,16 @@ namespace Tvitter.Web.Controllers
                         if (user != null)
                         {
                             Mention mention1 = new Mention() { UserId = user.ID, TweetId = lastAddedTweetId };
+                            Notification notification = new Notification()
+                            {
+                                UserId = user.ID,
+                                Status = Status.Active,
+                                Content = "You are mentioned at this ",
+                                TweetId = lastAddedTweetId,
+                                Type = NotificationType.Mention
+                            };
                             _mentionContext.Add(mention1);
+                            _notificationContext.Add(notification);
                         }
                     }
                 }
