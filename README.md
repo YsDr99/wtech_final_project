@@ -63,7 +63,7 @@
 ### 25.05.2021
 <ul>
 	<li>Login from new device now pushes notification</li>
-	<li>Mentions now pushes notification</li>
+	<li>Mentions now push notification</li>
 	<li>Main layout displays new notification count</li>
-	<li>Improved code stability for invalid paramaters</li>
+	<li>Improved code stability for invalid parameters</li>
 </ul>
