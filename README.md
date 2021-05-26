@@ -1,4 +1,5 @@
-# wtech_final_project
+# wtech_final_project - twitter duplicate
+
 ### 17.05.2021
 <ul>
 	<li>Project repository created.</li>
@@ -66,4 +67,11 @@
 	<li>Mentions now pushes notification</li>
 	<li>Main layout displays new notification count</li>
 	<li>Improved code stability for invalid paramaters</li>
+</ul>
+
+### 26.05.2021
+<ul>
+	<li>Retweet added</li>
+	<li>Follow suggestions view component added</li>
+	<li>Discover page added</li>
 </ul>

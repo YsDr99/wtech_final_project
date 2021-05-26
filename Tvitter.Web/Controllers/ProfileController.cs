@@ -36,7 +36,7 @@ namespace Tvitter.Web.Controllers
             var user = _userContext.GetById(id);
             user.Followers = _followContext.GetDefault(x => x.FollowingId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
             user.Following = _followContext.GetDefault(x => x.FollowerId == user.ID).OrderByDescending(y => y.CreatedDate).ToList();
-            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.Tweet).OrderByDescending(y => y.CreatedDate).ToList();
+            user.Tweets = _tweetContext.GetTweets(x => x.UserId == user.ID && x.Type == TweetType.Tweet).OrderByDescending(y => y.CreatedDate).Take(5).ToList();
 
             return View(user);
         }

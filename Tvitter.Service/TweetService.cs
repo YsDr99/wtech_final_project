@@ -25,6 +25,12 @@ namespace Tvitter.Service
             if (tweet == null)
                 return null;
             tweet.Comments = GetTweets(x => tweet.ID == x.BelongsTo).OrderByDescending(x => x.CreatedDate).ToList<Tweet>();
+            if (tweet.RetweetId != null)
+            {
+                tweet.Retweet = context.Set<T>().Include(x => x.User).FirstOrDefault(x => x.ID == tweet.RetweetId);
+            }
+            tweet.RetweetCount = context.Set<T>().Where(x => x.RetweetId == tweet.ID).ToList().Count();
+
             return tweet;
         }
 
@@ -34,6 +40,12 @@ namespace Tvitter.Service
             {
                 var tweet = context.Set<T>().Where(x => x.Status != Status.Deleted).Include(x => x.Likes).Where(x => x.ID == id).First();
                 tweet.Comments = GetTweets(x => tweet.ID == x.BelongsTo).OrderByDescending(x => x.CreatedDate).ToList<Tweet>();
+                if (tweet.RetweetId != null)
+                {
+                    tweet.Retweet = context.Set<T>().Include(x => x.User).FirstOrDefault(x => x.ID == tweet.RetweetId);
+                }
+                tweet.RetweetCount = context.Set<T>().Where(x => x.RetweetId == tweet.ID).ToList().Count();
+
                 return tweet;
             }
             catch
@@ -53,6 +65,11 @@ namespace Tvitter.Service
             foreach (Tweet tw in tweets)
             {
                 tw.Comments = comments.Where(x => tw.ID == x.BelongsTo).OrderByDescending(x => x.CreatedDate).ToList<Tweet>();
+                if (tw.RetweetId != null)
+                {
+                    tw.Retweet = context.Set<T>().Include(x => x.User).FirstOrDefault(x => x.ID == tw.RetweetId);
+                }
+                tw.RetweetCount = context.Set<T>().Where(x => x.RetweetId == tw.ID).Count();
             }
 
             return tweets;

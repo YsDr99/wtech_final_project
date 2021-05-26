@@ -95,6 +95,10 @@ namespace Tvitter.Web
                     name: "tweet",
                     pattern: "Tweet/{id}",
                     defaults: new { controller = "Tweet", action = "Index"});
+                endpoints.MapControllerRoute(
+                   name: "retweet",
+                   pattern: "Retweet/{id}",
+                   defaults: new { controller = "Tweet", action = "Retweet" });
             });
         }
     }

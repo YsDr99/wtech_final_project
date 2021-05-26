@@ -11,6 +11,12 @@ namespace Tvitter.Model.Entities
 {
     public class Tweet : CoreEntity
     {
+        public Guid? RetweetId { get; set; }
+        [NotMapped]
+        public Tweet Retweet { get; set; }
+        [NotMapped]
+        public int RetweetCount { get; set; }
+
         public Guid? BelongsTo { get; set; }
         [NotMapped]
         public Guid? Parent { get; set; }

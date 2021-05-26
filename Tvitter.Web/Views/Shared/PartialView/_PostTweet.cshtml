@@ -3,35 +3,63 @@
     Layout = null;
 }
 <div class="w-100">
-    <form asp-action="PostTweet" method="post" enctype="multipart/form-data">
-        <div class="form-outline">
-            @if (Model.Parent == Guid.Empty || Model.Parent == null)
-            {
-                <textarea class="form-control"
-                          asp-for="Text"
-                          placeholder="What's Happening?"
-                          style="resize:none"
-                          rows="3"></textarea>
-            }
-            else
-            {
-                Model.Text = "";
+    @if (Model.RetweetId != null)
+    {
+        <form asp-action="Retweet" asp-controller="Tweet" method="post">
+            <div class="form-outline">
+
+                @{
+                    Model.Text = "";
+                }
                 <textarea class="form-control"
                           asp-for="Text"
                           placeholder="Write Comment"
                           style="resize:none"
                           rows="3"></textarea>
-            }
 
-        </div>
-        <div class="d-flex justify-content-between mt-1 row">
 
-            <input type="text" asp-for="Parent" hidden />
-
-            <div class="form-group">
-                <input type="file" name="files" accept="image/*" class="ml-3" />
             </div>
-            <input type="submit" value="Tweet" class="btn btn-info mr-3">
-        </div>
-    </form>
+            <div class="d-flex justify-content-end mt-1 row">
+
+                <input type="text" asp-for="RetweetId" hidden />
+
+                <input type="submit" value="Retweet" class="btn btn-info mr-3">
+            </div>
+        </form>
+    }
+    else
+    {
+        <form asp-action="PostTweet" method="post" enctype="multipart/form-data">
+            <div class="form-outline">
+                @if (Model.Parent == Guid.Empty || Model.Parent == null)
+                {
+                    <textarea class="form-control"
+                              asp-for="Text"
+                              placeholder="What's Happening?"
+                              style="resize:none"
+                              rows="3"></textarea>
+                }
+                else
+                {
+                    Model.Text = "";
+                    <textarea class="form-control"
+                              asp-for="Text"
+                              placeholder="Write Comment"
+                              style="resize:none"
+                              rows="3"></textarea>
+                }
+
+            </div>
+            <div class="d-flex justify-content-between mt-1 row">
+
+                <input type="text" asp-for="Parent" hidden />
+
+                <div class="form-group">
+                    <input type="file" name="files" accept="image/*" class="ml-3" />
+                </div>
+                <input type="submit" value="Tweet" class="btn btn-info mr-3">
+            </div>
+        </form>
+    }
+
 </div>

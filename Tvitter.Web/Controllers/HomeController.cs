@@ -28,14 +28,14 @@ namespace Tvitter.Web.Controllers
         private readonly ICoreService<Follow> _followContext;
         private readonly ITweetService<Tweet> _tweetContext;
         private readonly ICoreService<Like> _likeContext;
-        private readonly ICoreService<Tag> _tagContext;
+        private readonly ITagService<Tag> _tagContext;
         private readonly ICoreService<Mention> _mentionContext;
         private readonly ICoreService<Notification> _notificationContext;
 
         private IWebHostEnvironment _environment;
         public HomeController(ILogger<HomeController> logger, ICoreService<User> context,
             ICoreService<Follow> followContext, ITweetService<Tweet> tweetContext, IWebHostEnvironment environment,
-            ICoreService<Like> likeContext, ICoreService<Tag> tagContext, ICoreService<Mention> mentionContext,
+            ICoreService<Like> likeContext, ITagService<Tag> tagContext, ICoreService<Mention> mentionContext,
             ICoreService<Notification> notificationContext)
         {
             _logger = logger;
@@ -220,6 +220,12 @@ namespace Tvitter.Web.Controllers
 
             return PartialView("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(user, tweet));
 
+        }
+
+        public IActionResult Discover()
+        {
+            IEnumerable<Tuple<string, int>> trends = _tagContext.GetTrends().ToList();
+            return View(trends);
         }
 
 

@@ -17,7 +17,7 @@
                 <div class="sidebar-heading">Tvitter by yunus</div>
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action bg-light" asp-controller="Home" asp-action="Index">Home</a>
-                    <a class="list-group-item list-group-item-action bg-light" href="#!">Discover</a>
+                    <a class="list-group-item list-group-item-action bg-light" asp-controller="Home" asp-action="Discover">Discover</a>
                     <a 
                        class="list-group-item list-group-item-action bg-light" asp-controller="Notification" asp-action="Index">Notifications <b>@TempData["NewNotificationCount"]</b> 
                     </a>
@@ -61,9 +61,15 @@
                 <div class=" col-9 container mb-3">
                     @RenderBody()
                 </div>
-                <div class="col-3 mb-3 mx-auto">
-                    @await Component.InvokeAsync("Trends")
+                <div class="d-flex col-3 mx-auto flex-column">
+                    <div class="mb-3">
+                        @await Component.InvokeAsync("Trends")
+                    </div>
+                    <div class="mb-3">
+                        @await Component.InvokeAsync("FollowSuggestion")
+                    </div>
                 </div>
+                
             </div>
 
         </div>

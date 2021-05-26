@@ -77,7 +77,7 @@
                     <h5 class="mb-0">Recent Tweets</h5><a href="/@Model.Username/Tweets" class="btn btn-link text-muted">Show all</a>
                 </div>
                 <div class="col-11 mx-auto">
-                    @foreach (var tweet in Model.Tweets.Take(5))
+                    @foreach (var tweet in Model.Tweets)
                     {
                         <div id="view@(tweet.ID.ToString())">
                             @await Html.PartialAsync("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(Model, tweet))

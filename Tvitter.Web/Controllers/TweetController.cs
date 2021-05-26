@@ -180,5 +180,119 @@ namespace Tvitter.Web.Controllers
             }
             return RedirectToAction("Index", "Tweet", new { id = tweet.Parent.ToString() });
         }
+
+        public IActionResult Retweet(string id)
+        {
+            if (!Guid.TryParse(id, out Guid tweetID))
+            {
+                TempData["NotFoundName"] = "tweet";
+                return RedirectToAction("NameNotFound", "Home");
+            }
+
+            Tweet tweet = _tweetContext.GetTweet(tweetID);
+            if (tweet == null)
+            {
+                TempData["NotFoundName"] = "tweet";
+                return RedirectToAction("NameNotFound", "Home");
+            }
+
+            tweet.User = _userContext.GetById(tweet.UserId);
+            tweet.RetweetId = tweet.ID;
+            return View(Tuple.Create(tweet.User, tweet));
+        }
+
+        [HttpPost]
+        public IActionResult Retweet(Tweet tweet)
+        {
+            Guid id = Guid.Parse(User.FindFirst("ID").Value);
+            Guid lastAddedTweetId = Guid.Empty;
+            var clientIpAdress = HttpContext.GetRemoteIPAddress().ToString();
+
+            if (ModelState.IsValid)
+            {
+                tweet.UserId = id;
+                tweet.ID = Guid.Empty;
+
+
+                var input = tweet.Text;
+
+                var regex = new Regex(@"#\w+");
+                var matches = regex.Matches(input).Distinct().OfType<Match>()
+                                     .Select(m => m.Groups[0].Value)
+                                     .Distinct().ToList();
+
+                var regexMention = new Regex(@"@\w+");
+                var matchesMention = regexMention.Matches(input).OfType<Match>()
+                                     .Select(m => m.Groups[0].Value)
+                                     .Distinct().ToList();
+
+                if (matches.Count > 0)
+                {
+                    foreach (var match in matches)
+                    {
+                        string tagName = match.ToString().ToLower();
+                        Tag tag = new Tag();
+                        if (!_tagContext.Any(x => x.Name == tagName))
+                        {
+                            tag.Name = tagName;
+                            _tagContext.Add(tag);
+                        }
+                    }
+
+                    List<Tag> tags = _tagContext.GetAll().ToList();
+                    foreach (var match in matches)
+                    {
+                        string tagName = match.ToString().ToLower();
+                        Tag tag = new Tag();
+
+                        tag = tags.FirstOrDefault(x => x.Name == tagName);
+                        tweet.TagId = tag.ID;
+                        tweet.CreatedIP = clientIpAdress;
+                        _tweetContext.Add(tweet);
+
+                        if (lastAddedTweetId == Guid.Empty)
+                        {
+                            lastAddedTweetId = tweet.ID;
+
+                        }
+
+                        tweet.ID = Guid.Empty;
+                        tweet.Type = TweetType.TagCopy;
+                    }
+                }
+                else
+                {
+                    tweet.CreatedIP = clientIpAdress;
+                    _tweetContext.Add(tweet);
+                    lastAddedTweetId = tweet.ID;
+                }
+
+                if (matchesMention.Count > 0)
+                {
+
+                    foreach (var mention in matchesMention)
+                    {
+                        var username = mention.ToString().Substring(1);
+                        var user = _userContext.GetFirstOrDefault(x => x.Username == username);
+                        if (user != null)
+                        {
+                            Mention mention1 = new Mention() { UserId = user.ID, TweetId = lastAddedTweetId };
+                            Notification notification = new Notification()
+                            {
+                                UserId = user.ID,
+                                Status = Status.Active,
+                                Content = "You are mentioned at this ",
+                                TweetId = lastAddedTweetId,
+                                Type = NotificationType.Mention
+                            };
+                            _mentionContext.Add(mention1);
+                            _notificationContext.Add(notification);
+                        }
+                    }
+                }
+
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
