@@ -66,7 +66,6 @@
 	<li>Login from new device now pushes notification</li>
 	<li>Mentions now push notification</li>
 	<li>Main layout displays new notification count</li>
-<<<<<<< HEAD
 	<li>Improved code stability for invalid paramaters</li>
 </ul>
 
@@ -76,7 +75,3 @@
 	<li>Follow suggestions view component added</li>
 	<li>Discover page added</li>
 </ul>
-=======
-	<li>Improved code stability for invalid parameters</li>
-</ul>
->>>>>>> a10522a6d333d202c9a442b5705cbdd01dd46ec8
