@@ -13,12 +13,14 @@ function LikeTweet(u, t) {
         },
         dataType: 'html',
         success: function (result) {
-            result = result.replace(/(@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
+            result = result.replace(/(@\w+)/g, '<a href="/$1">$1</a>');
             result = result.replace(/="\/@/g, '="/');
             $("#view" + t).html(result);
-            makeLinks(1);
-
+            makeTagsLink();
         },
+        error: function (e) {
+            console.log(e);
+        }
     });
 }
 function UnlikeTweet(u, t) {
@@ -32,10 +34,10 @@ function UnlikeTweet(u, t) {
         },
         dataType: 'html',
         success: function (result) {
-            result = result.replace(/(@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
+            result = result.replace(/(@\w+)/g, '<a href="/$1">$1</a>');
             result = result.replace(/="\/@/g, '="/');
             $("#view" + t).html(result);
-            makeLinks(1);
+            makeTagsLink();
         }
 
     });
@@ -43,17 +45,24 @@ function UnlikeTweet(u, t) {
 }
 
 $(document).ready(function () {
-    makeLinks(0);
+    makeTagsLink();
+    makeMentionsLink();
 });
 
-function makeLinks(i) {
+
+
+function makeTagsLink() {
     $("p").html(function (_, html) {
-        html = html.replace(/(\#\w+)/g, '<a href="/Tweet/Trend?tag=$1"><span class="blue">$1</span></a>');
-        html = html.replace(/=\#/g, '=' + encodeURIComponent('#'));
-        if (i === 0) {
-            html = html.replace(/(@\w+)/g, '<a href="/$1"><span class="blue">$1</span></a>');
-            html = html.replace(/="\/@/g, '="/');
-        }
+        html = html.replace(/(#\w+)/g, '<a href="/Tweet/Trend?tag=$1">$1</a>');
+        html = html.replace(/=#/g, '=' + encodeURIComponent('#'));
+        return html;
+    });
+}
+
+function makeMentionsLink() {
+    $("p").html(function (_, html) {
+        html = html.replace(/(@\w+)/g, '<a href="/$1">$1</a>');
+        html = html.replace(/="\/@/g, '="/');
         return html;
     });
 }

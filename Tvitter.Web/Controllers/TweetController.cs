@@ -100,6 +100,7 @@ namespace Tvitter.Web.Controllers
                     }
                 }
 
+                tweet.Text = tweet.Text ?? ".";
                 var input = tweet.Text;
 
                 var regex = new Regex(@"#\w+");
@@ -214,6 +215,7 @@ namespace Tvitter.Web.Controllers
                 tweet.ID = Guid.Empty;
 
 
+                tweet.Text = tweet.Text ?? ".";
                 var input = tweet.Text;
 
                 var regex = new Regex(@"#\w+");

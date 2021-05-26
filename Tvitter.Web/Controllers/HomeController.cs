@@ -109,6 +109,7 @@ namespace Tvitter.Web.Controllers
                     }
                 }
 
+                tweet.Text = tweet.Text ?? ".";
                 var input = tweet.Text;
 
                 var regex = new Regex(@"#\w+");
