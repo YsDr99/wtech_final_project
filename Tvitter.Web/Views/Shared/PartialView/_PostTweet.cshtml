@@ -3,7 +3,7 @@
     Layout = null;
 }
 <div class="w-100">
-    @if (Model.RetweetId != null)
+    @if (Model.RetweetId != null && Model.Parent == null)
     {
         <form asp-action="Retweet" asp-controller="Tweet" method="post">
             <div class="form-outline">

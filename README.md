@@ -74,5 +74,5 @@
 	<li>Retweet added</li>
 	<li>Follow suggestions view component added</li>
 	<li>Discover page added</li>
-	<li>bug fixes</li>
+	<li>Bug fixes</li>
 </ul>
