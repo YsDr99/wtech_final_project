@@ -55,23 +55,9 @@
                     <div class="mx-auto w-100">
                         @if (Model.Item2.MediaUrl != null)
                         {
-                            <script language="javascript">
 
-                                fileName = '@Url.Content(Model.Item2.MediaUrl)';
-                                extension = fileName.split('.').pop();
-                            switch (extension.toLowerCase()) {
-                                case 'jpg':
-                                case 'gif':
-                                case 'bmp':
-                                case 'png':
-                                    document.write(" <img src=\"@Url.Content(Model.Item2.MediaUrl)\" alt=\"\" class=\"card-img-bottom mb-2\">");
-                                    break;
-                                case 'mp4':
-                                    document.write("<video width=\"720\" height=\"400\" controls><source src=\"@Url.Content(Model.Item2.MediaUrl)\" type=\"video/mp4\">Your browser does not support the video tag.</video>");
-                                    break;
-                            }
+                           <img src="@Url.Content(Model.Item2.MediaUrl)" alt="" class="card-img-bottom mb-2">
 
-                            </script>
                         }
                     </div>
 
@@ -207,22 +193,7 @@ else
                                                 <div class="mx-auto w-100">
                                                     @if (Model.Item2.Retweet.MediaUrl != null)
                                                     {
-                                                        <script language="javascript">
-
-                                                            fileName = '@Url.Content(Model.Item2.Retweet.MediaUrl)';
-                                                            extension = fileName.split('.').pop();
-                                                            switch (extension.toLowerCase()) {
-                                                                case 'jpg':
-                                                                case 'gif':
-                                                                case 'bmp':
-                                                                case 'png':
-                                                                    document.write(" < img src = \"@Url.Content(Model.Item2.Retweet.MediaUrl)\" alt = \"\" class=\"card-img-bottom mb-2\" >");
-                                                                    break;
-                                                                case 'mp4':
-                                                                    document.write("<video width=\"620\" height=\"340\" controls><source src=\"@Url.Content(Model.Item2.Retweet.MediaUrl)\" type=\"video/mp4\">Your browser does not support the video tag.</video>");
-                                                                    break;
-                                                            }
-                                                        </script>
+                                                        <img src="@Url.Content(Model.Item2.Retweet.MediaUrl)" alt="" class="card-img-bottom mb-2">
                                                     }
                                                 </div>
 

@@ -53,8 +53,8 @@ $(document).ready(function () {
 
 function makeTagsLink() {
     $("p").html(function (_, html) {
-        html = html.replace(/(#\w+)/g, '<a href="/Tweet/Trend?tag=$1">$1</a>');
-        html = html.replace(/=#/g, '=' + encodeURIComponent('#'));
+        html = html.replace(/(\#\w+)/g, '<a href="/Tweet/Trend?tag=$1">$1</a>');
+        html = html.replace(/=\#/g, '=' + encodeURIComponent('#'));
         return html;
     });
 }

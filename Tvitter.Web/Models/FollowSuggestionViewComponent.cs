@@ -37,10 +37,10 @@ namespace Tvitter.Web.Models
             {
                 return View(myFollowings);
             }
-            var randomMyFollowing = myFollowings.OrderBy(r => Guid.NewGuid()).Take(1);
+            var randomMyFollowing = myFollowings.OrderBy(r => Guid.NewGuid()).First();
 
             var randomMyFollowingFollowings = from u in users
-                                              join f in follows.Where(x => x.FollowerId == randomMyFollowing.ElementAt(0).ID)
+                                              join f in follows.Where(x => x.FollowerId == randomMyFollowing.ID)
                                                   on u.ID equals f.FollowingId
                                               select u;
 

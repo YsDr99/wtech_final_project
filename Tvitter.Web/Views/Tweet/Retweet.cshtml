@@ -37,10 +37,10 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="d-flex flex-start w-75">
-                                                        @if (Model.Item1.ProfilePictureUrl != null)
+                                                        @if (Model.Item2.User.ProfilePictureUrl != null)
                                                         {
                                                             <img class="rounded-circle shadow-1-strong mr-3"
-                                                                 src="@Url.Content(Model.Item1.ProfilePictureUrl)"
+                                                                 src="@Url.Content(Model.Item2.User.ProfilePictureUrl)"
                                                                  alt="avatar"
                                                                  width="45"
                                                                  height="45" />
@@ -56,9 +56,9 @@
 
                                                         <div>
                                                             <p>
-                                                                <a href="/@Model.Item1.Username"><b>@Model.Item1.Fullname</b></a><br />
+                                                                <a href="/@Model.Item2.User.Username"><b>@Model.Item2.User.Fullname</b></a><br />
                                                                 <span style="color:lightgray">
-                                                                    @Html.Raw("@")@Model.Item1.Username @Model.Item2.CreatedDate
+                                                                    @Html.Raw("@")@Model.Item2.User.Username @Model.Item2.CreatedDate
                                                                 </span>
                                                             </p>
                                                         </div>

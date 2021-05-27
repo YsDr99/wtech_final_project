@@ -214,15 +214,31 @@
                             else
                             {
                                 <div class="incoming_msg">
-                                    @if (Model.First().Reciever.ProfilePictureUrl == null)
+                                    @if (message.SenderId.ToString() == Model.First().Reciever.ID.ToString())
                                     {
-                                        <div class="incoming_msg_img"> <img class="rounded-circle" src="https://st.depositphotos.com/1779253/5140/v/600/depositphotos_51405259-stock-illustration-male-avatar-profile-picture-use.jpg" alt="sunil"> </div>
+                                        @if (Model.First().Reciever.ProfilePictureUrl == null)
+                                        {
+                                            <div class="incoming_msg_img"> <img class="rounded-circle" src="https://st.depositphotos.com/1779253/5140/v/600/depositphotos_51405259-stock-illustration-male-avatar-profile-picture-use.jpg" alt="sunil"> </div>
 
+                                        }
+                                        else
+                                        {
+                                            <div class="incoming_msg_img"> <img class="rounded-circle" src="@Url.Content(Model.First().Reciever.ProfilePictureUrl)" alt="sunil"> </div>
+                                        }
                                     }
                                     else
                                     {
-                                        <div class="incoming_msg_img"> <img class="rounded-circle" src="@Url.Content(Model.First().Reciever.ProfilePictureUrl)" alt="sunil"> </div>
+                                        @if (Model.First().Sender.ProfilePictureUrl == null)
+                                        {
+                                            <div class="incoming_msg_img"> <img class="rounded-circle" src="https://st.depositphotos.com/1779253/5140/v/600/depositphotos_51405259-stock-illustration-male-avatar-profile-picture-use.jpg" alt="sunil"> </div>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="incoming_msg_img"> <img class="rounded-circle" src="@Url.Content(Model.First().Sender.ProfilePictureUrl)" alt="sunil"> </div>
+                                        }
                                     }
+
                                     <div class="received_msg">
                                         <div class="received_withd_msg">
                                             <p>

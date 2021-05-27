@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div id="view@(Model.Item2.ID.ToString())">
-                @await Html.PartialAsync("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(Model.Item1, Model.Item2))
+                @await Html.PartialAsync("PartialView/_DisplayTweet", Tuple.Create<User, Tweet>(Model.Item2.User, Model.Item2))
             </div>
         </div>
         <div class="mx-auto">

@@ -55,7 +55,10 @@ namespace Tvitter.Web.Controllers
 
             tweet.User = _userContext.GetById(tweet.UserId);
             tweet.Parent = tweet.ID;
-            return View(Tuple.Create(tweet.User,tweet));
+
+            Guid ID = Guid.Parse(User.FindFirst("ID").Value);
+            var user = _userContext.GetById(ID);
+            return View(Tuple.Create(user, tweet));
         }
 
         public IActionResult Trend(string tag)
@@ -199,7 +202,9 @@ namespace Tvitter.Web.Controllers
 
             tweet.User = _userContext.GetById(tweet.UserId);
             tweet.RetweetId = tweet.ID;
-            return View(Tuple.Create(tweet.User, tweet));
+            Guid ID = Guid.Parse(User.FindFirst("ID").Value);
+            var user = _userContext.GetById(ID);
+            return View(Tuple.Create(user, tweet));
         }
 
         [HttpPost]
