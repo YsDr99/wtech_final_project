@@ -80,9 +80,8 @@ namespace Tvitter.Model.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Person1Id = table.Column<Guid>(type: "uniqueidentifier", maxLength: 100, nullable: false),
-                    Person2Id = table.Column<Guid>(type: "uniqueidentifier", maxLength: 100, nullable: false),
-                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RecieverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedComputerName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
@@ -95,8 +94,14 @@ namespace Tvitter.Model.Migrations
                 {
                     table.PrimaryKey("PK_Chats", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Chats_Users_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Chats_Users_RecieverId",
+                        column: x => x.RecieverId,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Chats_Users_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -108,8 +113,9 @@ namespace Tvitter.Model.Migrations
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    TweetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedComputerName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
@@ -134,11 +140,13 @@ namespace Tvitter.Model.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RetweetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    BelongsTo = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TagId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     MediaUrl = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     Text = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    IsComment = table.Column<bool>(type: "bit", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedComputerName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
@@ -170,7 +178,7 @@ namespace Tvitter.Model.Migrations
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsPerson1Sent = table.Column<bool>(type: "bit", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -187,39 +195,6 @@ namespace Tvitter.Model.Migrations
                         name: "FK_Messages_Chats_ChatId",
                         column: x => x.ChatId,
                         principalTable: "Chats",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TweetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CommentTweetId = table.Column<Guid>(type: "uniqueidentifier", maxLength: 100, nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedComputerName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    CreatedIP = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedComputerName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    ModifiedIP = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Comments_Tweets_TweetId",
-                        column: x => x.TweetId,
-                        principalTable: "Tweets",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Comments_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -289,29 +264,14 @@ namespace Tvitter.Model.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chats_Person1Id",
+                name: "IX_Chats_RecieverId",
                 table: "Chats",
-                column: "Person1Id");
+                column: "RecieverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chats_Person2Id",
+                name: "IX_Chats_SenderId",
                 table: "Chats",
-                column: "Person2Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Chats_UserID",
-                table: "Chats",
-                column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_TweetId",
-                table: "Comments",
-                column: "TweetId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_UserId",
-                table: "Comments",
-                column: "UserId");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Follows_FollowerId",
@@ -361,14 +321,19 @@ namespace Tvitter.Model.Migrations
                 filter: "[Name] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tweets_IsComment",
+                name: "IX_Tweets_BelongsTo",
                 table: "Tweets",
-                column: "IsComment");
+                column: "BelongsTo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tweets_TagId",
                 table: "Tweets",
                 column: "TagId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tweets_Type",
+                table: "Tweets",
+                column: "Type");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tweets_UserId",
@@ -384,9 +349,6 @@ namespace Tvitter.Model.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Comments");
-
             migrationBuilder.DropTable(
                 name: "Follows");
 

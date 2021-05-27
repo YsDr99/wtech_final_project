@@ -71,6 +71,11 @@ namespace Tvitter.Web.Controllers
                          select Tuple.Create<User, Tweet>(u, t);
 
             var result = query.Union(query2);
+            if (result == null)
+            {
+                return View(Tuple.Create(user, new Tweet()));
+            }
+
             user.HomePageTweets = result.ToList().OrderByDescending(x => x.Item2.CreatedDate).ToList();
             user.Notifications = _notificationContext.GetDefault(x => x.UserId == user.ID);
 
