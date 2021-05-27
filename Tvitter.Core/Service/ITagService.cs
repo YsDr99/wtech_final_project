@@ -8,9 +8,7 @@ using Tvitter.Core.Entity;
 
 namespace Tvitter.Core.Service
 {
-    interface ITagService
-    {
-    }
+
     public interface ITagService<T> : ICoreService<T> where T : CoreEntity
     {
         public List<Tuple<string, int>> GetTrends();

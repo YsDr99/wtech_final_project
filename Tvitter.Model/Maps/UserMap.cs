@@ -24,7 +24,6 @@ namespace Tvitter.Model.Maps
             builder.Property(x => x.ProfilePictureUrl).HasMaxLength(1000).IsRequired(false);
             builder.Property(x => x.gender).HasMaxLength(10).IsRequired(false);
 
-
             base.Configure(builder);
         }
     }

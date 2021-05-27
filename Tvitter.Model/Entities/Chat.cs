@@ -10,8 +10,14 @@ namespace Tvitter.Model.Entities
 {
     public class Chat : CoreEntity
     {
-        public Guid Person1Id { get; set; }
-        public Guid Person2Id { get; set; }
+
+        [ForeignKey("SenderId")]
+        public User Sender { get; set; }
+        public Guid SenderId { get; set; }
+
+        [ForeignKey("RecieverId")]
+        public User Reciever { get; set; }
+        public Guid RecieverId { get; set; }
 
         public virtual ICollection<Message> Messages { get; set; }
     }

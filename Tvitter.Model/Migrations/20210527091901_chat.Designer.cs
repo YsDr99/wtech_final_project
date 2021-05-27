@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tvitter.Model;
 
 namespace Tvitter.Model.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210527091901_chat")]
+    partial class chat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,11 +58,16 @@ namespace Tvitter.Model.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("ID");
 
                     b.HasIndex("RecieverId");
 
                     b.HasIndex("SenderId");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Chats");
                 });
@@ -522,6 +529,11 @@ namespace Tvitter.Model.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Tvitter.Model.Entities.User", null)
+                        .WithMany("Chats")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Reciever");
 
                     b.Navigation("Sender");
@@ -623,6 +635,8 @@ namespace Tvitter.Model.Migrations
 
             modelBuilder.Entity("Tvitter.Model.Entities.User", b =>
                 {
+                    b.Navigation("Chats");
+
                     b.Navigation("Likes");
 
                     b.Navigation("Mentions");

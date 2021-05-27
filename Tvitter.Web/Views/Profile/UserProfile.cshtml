@@ -29,29 +29,33 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-light p-4 d-flex justify-content-sm-between text-center mt-4">
+            <div class="bg-light p-4 d-flex justify-content-between text-center mt-4">
                 <div class="mt-0">
-                    @if (Model.Followers.Where(x => x.FollowingId == Model.ID && x.FollowerId.ToString() == User.FindFirst("ID").Value).ToList().Count > 0)
-                    {
-                        <form asp-controller="Profile" asp-action="Follow" method="post" data-ajax="true" data-ajax-method="post" data-ajax-mode='replace'>
-                            <input type="text" name="id" value="@Model.ID" hidden />
-                            <input type="text" name="username" value="@Model.Username" hidden />
-                            <input type="text" name="action" value="unfollow" hidden />
-                            <input type="submit" value="Unfollow" class="btn btn-outline-dark btn-sm btn-block" />
-                        </form>
-                    }
-                    else
-                    {
-                        <form asp-controller="Profile" asp-action="Follow" method="post" data-ajax="true" data-ajax-method="post" data-ajax-mode='replace'>
-                            <input type="text" name="id" value="@Model.ID" hidden />
-                            <input type="text" name="username" value="@Model.Username" hidden />
-                            <input type="text" name="action" value="follow" hidden />
+                    <div class="row justify-content-center">
+                        @if (Model.Followers.Where(x => x.FollowingId == Model.ID && x.FollowerId.ToString() == User.FindFirst("ID").Value).ToList().Count > 0)
+                        {
+                            <form asp-controller="Profile" asp-action="Follow" method="post" data-ajax="true" data-ajax-method="post" data-ajax-mode='replace'>
+                                <input type="text" name="id" value="@Model.ID" hidden />
+                                <input type="text" name="username" value="@Model.Username" hidden />
+                                <input type="text" name="action" value="unfollow" hidden />
+                                <input type="submit" value="Unfollow" class="btn btn-outline-dark btn-sm btn-block" />
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-controller="Profile" asp-action="Follow" method="post" data-ajax="true" data-ajax-method="post" data-ajax-mode='replace'>
+                                <input type="text" name="id" value="@Model.ID" hidden />
+                                <input type="text" name="username" value="@Model.Username" hidden />
+                                <input type="text" name="action" value="follow" hidden />
 
-                            <input type="submit" value="Follow" class="btn btn-outline-dark btn-sm btn-block" />
-                        </form>
-                    }
+                                <input type="submit" value="Follow" class="btn btn-outline-dark btn-sm btn-block" />
+                            </form>
+                        }
+                        <div class="pl-2">
+                            <a asp-controller="Message" asp-action="StartChat" asp-route-receiverId="@Model.ID" class="btn btn-outline-info btn-sm"><i class="fas fa-envelope"></i></a>
 
-
+                        </div>
+                    </div>
                     @if (Model.Location != null)
                     {
                         <b class="mt-0 mb-0">

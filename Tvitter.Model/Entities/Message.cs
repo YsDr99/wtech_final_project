@@ -14,7 +14,7 @@ namespace Tvitter.Model.Entities
         public Chat Chat { get; set; }
         public Guid ChatId { get; set; }
 
-        public bool IsPerson1Sent { get; set; }
+        public Guid SenderId { get; set; }
         public string Content { get; set; }
     }
 }

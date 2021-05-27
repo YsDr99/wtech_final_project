@@ -76,3 +76,10 @@
 	<li>Discover page added</li>
 	<li>Bug fixes</li>
 </ul>
+
+### 27.05.2021
+<ul>
+	<li>Messaging added</li>
+	<li>Users can see if they have any new message</li>
+	<li>Dm button added to profile page</li>
+</ul>

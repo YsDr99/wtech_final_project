@@ -11,11 +11,11 @@ namespace Tvitter.Web.Controllers
    
     public class NotificationController : Controller
     {
-        private readonly ICoreService<Notification> _notificationContext;
+        private readonly INotificationService<Notification> _notificationContext;
         private readonly ICoreService<User> _userContext;
 
 
-        public NotificationController(ICoreService<Notification> notificationContext, ICoreService<User> userContext)
+        public NotificationController(INotificationService<Notification> notificationContext, ICoreService<User> userContext)
         {
             _notificationContext = notificationContext;
             _userContext = userContext;
@@ -25,11 +25,10 @@ namespace Tvitter.Web.Controllers
         {
             Guid id = Guid.Parse(User.FindFirst("ID").Value);
             var user = _userContext.GetById(id);
+
+            IEnumerable<Notification> notifications = _notificationContext.GetShadowDefault(x => x.UserId == user.ID).OrderByDescending(x => x.CreatedDate).ToList();
+
             user.Notifications = _notificationContext.GetDefault(x => x.UserId == user.ID && x.Status == Core.Entity.Enum.Status.Active);
-
-            IEnumerable<Notification> notifications = _notificationContext.GetDefault(x => x.UserId == user.ID).OrderByDescending(x => x.CreatedDate).ToList();
-
-
             foreach (var noti in user.Notifications)
             {
                 noti.Status = Core.Entity.Enum.Status.None;

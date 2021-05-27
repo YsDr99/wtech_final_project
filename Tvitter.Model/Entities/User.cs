@@ -34,6 +34,7 @@ namespace Tvitter.Model.Entities
 
         public virtual ICollection<Tweet> Tweets { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
+        [NotMapped]
         public virtual ICollection<Chat> Chats { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
         [NotMapped]

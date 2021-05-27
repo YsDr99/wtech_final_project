@@ -16,10 +16,10 @@ namespace Tvitter.Model.Maps
         {
 
             builder.ToTable("Chats");
-            builder.HasIndex(x => x.Person1Id).IsUnique(false);
-            builder.HasIndex(x => x.Person2Id).IsUnique(false);
-            builder.Property(x => x.Person1Id).HasMaxLength(100).IsRequired(true);
-            builder.Property(x => x.Person2Id).HasMaxLength(100).IsRequired(true);
+            builder.Property(x => x.SenderId).IsRequired(true);
+            builder.HasOne(x => x.Sender).WithMany().OnDelete(DeleteBehavior.Restrict); ;
+            builder.Property(x => x.RecieverId).IsRequired(true);
+            builder.HasOne(x => x.Reciever).WithMany().OnDelete(DeleteBehavior.Restrict);
             base.Configure(builder);
         }
     }

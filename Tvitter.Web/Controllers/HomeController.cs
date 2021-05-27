@@ -31,12 +31,13 @@ namespace Tvitter.Web.Controllers
         private readonly ITagService<Tag> _tagContext;
         private readonly ICoreService<Mention> _mentionContext;
         private readonly ICoreService<Notification> _notificationContext;
+        private readonly IChatService<Chat> _chatContext;
 
         private IWebHostEnvironment _environment;
         public HomeController(ILogger<HomeController> logger, ICoreService<User> context,
             ICoreService<Follow> followContext, ITweetService<Tweet> tweetContext, IWebHostEnvironment environment,
             ICoreService<Like> likeContext, ITagService<Tag> tagContext, ICoreService<Mention> mentionContext,
-            ICoreService<Notification> notificationContext)
+            ICoreService<Notification> notificationContext, IChatService<Chat> chatContext)
         {
             _logger = logger;
             _userContext = context;
@@ -47,6 +48,7 @@ namespace Tvitter.Web.Controllers
             _tagContext = tagContext;
             _mentionContext = mentionContext;
             _notificationContext = notificationContext;
+            _chatContext = chatContext;
 
         }
 
@@ -75,6 +77,21 @@ namespace Tvitter.Web.Controllers
             var ActiveNotifications = _notificationContext.GetDefault(x => x.Status == Status.Active && x.UserId == user.ID).ToList();
             TempData["NewNotificationCount"] = ActiveNotifications.Count > 0 ? ActiveNotifications.Count.ToString() : "";
 
+            var chats = _chatContext.GetChats(x => x.SenderId == id || x.RecieverId == id);
+            int count = 0;
+            foreach (var chat in chats)
+            {
+                foreach (var msg in chat.Messages)
+                {
+                    if (msg.SenderId != id && msg.Status == Status.Active)
+                    {
+                        count++;
+                        break;
+                    }
+                }
+            }
+            TempData["NewMsgCount"] = count > 0 ? count.ToString() : "";
+
             return View(Tuple.Create(user, new Tweet()));
 
         }
@@ -100,7 +117,7 @@ namespace Tvitter.Web.Controllers
 
                     foreach (var file in files)
                     {
-                        if (file.Length > 0 && file.ContentType.Contains("image"))
+                        if (file.Length > 0 && (file.ContentType.Contains("image") || file.ContentType.Contains("video")))
                         {
                             Upload upload = new Upload(file, "TweetMedia", _environment);
 

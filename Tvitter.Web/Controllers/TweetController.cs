@@ -91,7 +91,7 @@ namespace Tvitter.Web.Controllers
 
                     foreach (var file in files)
                     {
-                        if (file.Length > 0 && file.ContentType.Contains("image"))
+                        if (file.Length > 0 && (file.ContentType.Contains("image") || file.ContentType.Contains("video")))
                         {
                             Upload upload = new Upload(file, "TweetMedia", _environment);
 

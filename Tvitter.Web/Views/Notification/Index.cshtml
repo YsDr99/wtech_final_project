@@ -11,14 +11,21 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-start w-100">
-                        @if (item.Type == Tvitter.Core.Entity.Enum.NotificationType.Login)
-                        {
-                            <p>@item.Content</p>
-                        }
-                        else
-                        {
-                            <p>@item.Content <a href="/Tweet/@item.TweetId"> tweet</a></p> 
-                        }
+                        <p>
+                            @if (item.Status != Tvitter.Core.Entity.Enum.Status.None)
+                            {
+
+                                <b>(New) </b>
+                            }
+                            @if (item.Type == Tvitter.Core.Entity.Enum.NotificationType.Login)
+                            {
+                                @item.Content
+                            }
+                            else
+                            {
+                                @item.Content <a href="/Tweet/@item.TweetId"> tweet</a>
+                            }
+                        </p>
                     </div>
                 </div>
             </div>

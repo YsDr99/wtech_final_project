@@ -17,7 +17,7 @@ namespace Tvitter.Model.Maps
 
             builder.ToTable("Messages");
             builder.Property(x => x.Content).HasMaxLength(1000).IsRequired(true);
-            builder.Property(x => x.IsPerson1Sent).IsRequired(true);
+            builder.Property(x => x.SenderId).IsRequired(true);
             builder.Property(x => x.ChatId).IsRequired(true);
 
             base.Configure(builder);

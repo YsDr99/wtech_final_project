@@ -36,6 +36,8 @@ namespace Tvitter.Web
             services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>));
             services.AddScoped(typeof(ITweetService<>), typeof(TweetService<>));
             services.AddScoped(typeof(ITagService<>), typeof(TagService<>));
+            services.AddScoped(typeof(INotificationService<>), typeof(NotificationService<>));
+            services.AddScoped(typeof(IChatService<>), typeof(ChatService<>));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => { options.LoginPath = "/Login"; });

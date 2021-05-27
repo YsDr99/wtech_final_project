@@ -52,11 +52,29 @@
                         }
                         <p class="mt-2">@Model.Item2.Text</p>
                     </div>
-                    @if (Model.Item2.MediaUrl != null)
-                    {
-                        <img src="@Url.Content(Model.Item2.MediaUrl)" alt="" class="card-img-bottom mb-2">
+                    <div class="mx-auto w-100">
+                        @if (Model.Item2.MediaUrl != null)
+                        {
+                            <script language="javascript">
 
-                    }
+                                fileName = '@Url.Content(Model.Item2.MediaUrl)';
+                                extension = fileName.split('.').pop();
+                            switch (extension.toLowerCase()) {
+                                case 'jpg':
+                                case 'gif':
+                                case 'bmp':
+                                case 'png':
+                                    document.write(" <img src=\"@Url.Content(Model.Item2.MediaUrl)\" alt=\"\" class=\"card-img-bottom mb-2\">");
+                                    break;
+                                case 'mp4':
+                                    document.write("<video width=\"720\" height=\"400\" controls><source src=\"@Url.Content(Model.Item2.MediaUrl)\" type=\"video/mp4\">Your browser does not support the video tag.</video>");
+                                    break;
+                            }
+
+                            </script>
+                        }
+                    </div>
+
                     <a href="/Tweet/@(Model.Item2.ID.ToString())" class="btn btn-outline-success btn-sm">
                         <span> @Model.Item2.Comments.Count</span>
                         <i class="far fa-comment"></i>
@@ -146,7 +164,7 @@ else
 
                         }
                         <p class="mt-2">@Model.Item2.Text</p>
-                       
+
                         <div class="mx-auto my-3">
                             <div>
                                 <div class="container">
@@ -185,11 +203,29 @@ else
                                                     <a href="/Tweet/@(Model.Item2.Retweet.ID)">Go to tweet </a>
                                                     <p class="mt-2">@Model.Item2.Retweet.Text</p>
                                                 </div>
-                                                @if (Model.Item2.Retweet.MediaUrl != null)
-                                                {
-                                                    <img src="@Url.Content(Model.Item2.Retweet.MediaUrl)" alt="" class="card-img-bottom mb-2">
 
-                                                }
+                                                <div class="mx-auto w-100">
+                                                    @if (Model.Item2.Retweet.MediaUrl != null)
+                                                    {
+                                                        <script language="javascript">
+
+                                                            fileName = '@Url.Content(Model.Item2.Retweet.MediaUrl)';
+                                                            extension = fileName.split('.').pop();
+                                                            switch (extension.toLowerCase()) {
+                                                                case 'jpg':
+                                                                case 'gif':
+                                                                case 'bmp':
+                                                                case 'png':
+                                                                    document.write(" < img src = \"@Url.Content(Model.Item2.Retweet.MediaUrl)\" alt = \"\" class=\"card-img-bottom mb-2\" >");
+                                                                    break;
+                                                                case 'mp4':
+                                                                    document.write("<video width=\"620\" height=\"340\" controls><source src=\"@Url.Content(Model.Item2.Retweet.MediaUrl)\" type=\"video/mp4\">Your browser does not support the video tag.</video>");
+                                                                    break;
+                                                            }
+                                                        </script>
+                                                    }
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -199,11 +235,6 @@ else
 
 
                     </div>
-                    @if (Model.Item2.MediaUrl != null)
-                    {
-                        <img src="@Url.Content(Model.Item2.MediaUrl)" alt="" class="card-img-bottom mb-2">
-
-                    }
                     <a href="/Tweet/@(Model.Item2.ID.ToString())" class="btn btn-outline-success btn-sm">
                         <span> @Model.Item2.Comments.Count</span>
                         <i class="far fa-comment"></i>
