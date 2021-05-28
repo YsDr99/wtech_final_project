@@ -79,23 +79,6 @@ namespace Tvitter.Web.Controllers
             user.HomePageTweets = result.ToList().OrderByDescending(x => x.Item2.CreatedDate).ToList();
             user.Notifications = _notificationContext.GetDefault(x => x.UserId == user.ID);
 
-            var ActiveNotifications = _notificationContext.GetDefault(x => x.Status == Status.Active && x.UserId == user.ID).ToList();
-            TempData["NewNotificationCount"] = ActiveNotifications.Count > 0 ? ActiveNotifications.Count.ToString() : "";
-
-            var chats = _chatContext.GetChats(x => x.SenderId == id || x.RecieverId == id);
-            int count = 0;
-            foreach (var chat in chats)
-            {
-                foreach (var msg in chat.Messages)
-                {
-                    if (msg.SenderId != id && msg.Status == Status.Active)
-                    {
-                        count++;
-                        break;
-                    }
-                }
-            }
-            TempData["NewMsgCount"] = count > 0 ? count.ToString() : "";
 
             return View(Tuple.Create(user, new Tweet()));
 

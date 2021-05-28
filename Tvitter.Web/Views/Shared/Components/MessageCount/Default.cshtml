@@ -1,0 +1,6 @@
+﻿
+@{
+    Layout = null;
+}
+
+<a class="list-group-item list-group-item-action bg-light" asp-controller="Message" asp-action="Index" asp-route-count="@TempData["NewMsgCount"]">Messages <b>@TempData["NewMsgCount"]</b> </a>

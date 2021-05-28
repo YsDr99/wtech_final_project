@@ -19,10 +19,8 @@
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action bg-light" asp-controller="Home" asp-action="Index">Home</a>
                     <a class="list-group-item list-group-item-action bg-light" asp-controller="Home" asp-action="Discover">Discover</a>
-                    <a 
-                       class="list-group-item list-group-item-action bg-light" asp-controller="Notification" asp-action="Index">Notifications <b>@TempData["NewNotificationCount"]</b> 
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-light" asp-controller="Message" asp-action="Index" asp-route-count="@TempData["NewMsgCount"]">Messages <b>@TempData["NewMsgCount"]</b> </a>
+                    @await Component.InvokeAsync("NotificationCount", Guid.Parse(User.FindFirst("ID").Value))
+                    @await Component.InvokeAsync("MessageCount", Guid.Parse(User.FindFirst("ID").Value))
                     <a class="list-group-item list-group-item-action bg-light" href="/@(User.FindFirst("Username").Value)">Profile</a>
                 </div>
             </div>

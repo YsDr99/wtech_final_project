@@ -83,3 +83,9 @@
 	<li>Users can see if they have any new message</li>
 	<li>Dm button added to profile page</li>
 </ul>
+
+### 28.05.2021
+<ul>
+	<li>new noti & msg count not showing up bug fixed</li>
+	<li>Remember me added to login page</li>
+</ul>
